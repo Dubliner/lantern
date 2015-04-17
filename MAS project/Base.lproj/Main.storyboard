@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="  Enter destination" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fY1-xb-vjh">
-                                <rect key="frame" x="39" y="107" width="522" height="70"/>
+                                <rect key="frame" x="39" y="107" width="522" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="0ci-gu-ZWa"/>
@@ -27,7 +27,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button autoresizesSubviews="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nh-Xj-y0P">
-                                <rect key="frame" x="509" y="107" width="50" height="70"/>
+                                <rect key="frame" x="509" y="107" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="TBi-8b-fSS"/>
                                     <constraint firstAttribute="height" constant="50" id="ZfN-QO-7Cx"/>
@@ -42,20 +42,13 @@
                         <color key="tintColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="fY1-xb-vjh" firstAttribute="top" secondItem="AOJ-Ws-Zf9" secondAttribute="bottom" constant="87" id="1h4-C4-3Lf"/>
-                            <constraint firstItem="fY1-xb-vjh" firstAttribute="centerX" secondItem="4RI-RG-acn" secondAttribute="centerX" constant="-3" id="E4N-K0-fTZ"/>
+                            <constraint firstItem="fY1-xb-vjh" firstAttribute="centerX" secondItem="4RI-RG-acn" secondAttribute="centerX" id="E4N-K0-fTZ"/>
                             <constraint firstItem="7nh-Xj-y0P" firstAttribute="top" secondItem="AOJ-Ws-Zf9" secondAttribute="bottom" constant="87" id="FgI-AK-M1M"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="7nh-Xj-y0P" secondAttribute="trailing" constant="50" id="Y3o-6Z-s8u"/>
-                            <constraint firstItem="TWA-Kb-EPA" firstAttribute="top" secondItem="fY1-xb-vjh" secondAttribute="bottom" constant="423" id="dvf-gn-hbM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7nh-Xj-y0P" secondAttribute="trailing" constant="25" id="h8z-65-wtq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fY1-xb-vjh" secondAttribute="trailing" constant="23" id="hyZ-1d-cpq"/>
                             <constraint firstItem="fY1-xb-vjh" firstAttribute="centerY" secondItem="7nh-Xj-y0P" secondAttribute="centerY" id="lgV-vi-cYW"/>
                             <constraint firstItem="fY1-xb-vjh" firstAttribute="leading" secondItem="4RI-RG-acn" secondAttribute="leadingMargin" constant="23" id="wyw-hu-8nf"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="Y3o-6Z-s8u"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="inputDest" destination="fY1-xb-vjh" id="EjA-bY-xkp"/>
@@ -164,11 +157,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HJO-bg-Lkn" customClass="GMSMapView">
-                                <rect key="frame" x="16" y="20" width="568" height="485"/>
+                                <rect key="frame" x="16" y="20" width="568" height="540"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BpY-QM-xnw">
-                                <rect key="frame" x="16" y="505" width="528" height="40"/>
+                                <rect key="frame" x="16" y="560" width="528" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="sJW-TL-t8W"/>
@@ -197,6 +190,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="eQ0-9X-Sll" firstAttribute="top" secondItem="BpY-QM-xnw" secondAttribute="bottom" id="0DT-h0-QX7"/>
                             <constraint firstItem="Ttp-NB-ACu" firstAttribute="leading" secondItem="BpY-QM-xnw" secondAttribute="trailing" id="B2w-Ev-nmq"/>
                             <constraint firstItem="HJO-bg-Lkn" firstAttribute="top" secondItem="CZ0-ew-IAa" secondAttribute="bottom" id="C0d-bK-0cB"/>
                             <constraint firstItem="BpY-QM-xnw" firstAttribute="leading" secondItem="fkn-xP-A04" secondAttribute="leadingMargin" id="ETN-LI-nxW"/>
@@ -205,7 +199,6 @@
                             <constraint firstItem="HJO-bg-Lkn" firstAttribute="leading" secondItem="fkn-xP-A04" secondAttribute="leadingMargin" constant="4" id="Ixt-ws-bJI"/>
                             <constraint firstItem="HJO-bg-Lkn" firstAttribute="top" secondItem="CZ0-ew-IAa" secondAttribute="bottom" id="LYF-FC-o1Q"/>
                             <constraint firstItem="BpY-QM-xnw" firstAttribute="centerX" secondItem="HJO-bg-Lkn" secondAttribute="centerX" id="NoR-7c-Hzf"/>
-                            <constraint firstItem="eQ0-9X-Sll" firstAttribute="top" secondItem="BpY-QM-xnw" secondAttribute="bottom" id="R6o-wc-NGE"/>
                             <constraint firstItem="eQ0-9X-Sll" firstAttribute="top" secondItem="Ttp-NB-ACu" secondAttribute="bottom" constant="2" id="Rp3-ET-MaX"/>
                             <constraint firstItem="BpY-QM-xnw" firstAttribute="top" secondItem="HJO-bg-Lkn" secondAttribute="bottom" constant="18" id="W3V-Ik-mdB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="HJO-bg-Lkn" secondAttribute="trailing" constant="-4" id="Zis-P2-BkH"/>
@@ -219,7 +212,6 @@
                             <constraint firstItem="BpY-QM-xnw" firstAttribute="top" secondItem="HJO-bg-Lkn" secondAttribute="bottom" id="oIZ-et-OIb"/>
                             <constraint firstItem="HJO-bg-Lkn" firstAttribute="top" secondItem="CZ0-ew-IAa" secondAttribute="bottom" id="oav-jX-e1u"/>
                             <constraint firstItem="HJO-bg-Lkn" firstAttribute="leading" secondItem="fkn-xP-A04" secondAttribute="leadingMargin" id="uso-1x-c5f"/>
-                            <constraint firstItem="eQ0-9X-Sll" firstAttribute="top" secondItem="BpY-QM-xnw" secondAttribute="bottom" constant="55" id="w6r-9h-TwT"/>
                             <constraint firstItem="HJO-bg-Lkn" firstAttribute="top" secondItem="CZ0-ew-IAa" secondAttribute="bottom" id="z52-G7-Guo"/>
                         </constraints>
                         <variation key="default">
