@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import Foundation
+
+
+
+
 
 class Initial: UIViewController {
     @IBOutlet weak var mapView: GMSMapView!
@@ -34,6 +39,16 @@ class Initial: UIViewController {
         mapView.mapType = kGMSTypeSatellite
         self.view = mapView
         */
+        
+        var url : NSString = "http://173.236.254.243:8080/heatmaps/positive?lat=32.725371&lng= -117.160721&radius=2500&total=2"
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
+            println(NSString(data: data, encoding: NSUTF8StringEncoding))
+        }
+        
+        task.resume()
+
+            
+
     }
     
     override func didReceiveMemoryWarning() {
