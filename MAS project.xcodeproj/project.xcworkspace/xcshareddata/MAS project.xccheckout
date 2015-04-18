@@ -12,6 +12,8 @@
 	<dict>
 		<key>0CC4CE13E0DBA16FD1119C6E8E8F0C80DC233E7B</key>
 		<string>https://github.com/adityakadur/lantern.git</string>
+		<key>EB36781D7E3F98E58DBE66B116E93D6655B0FA74</key>
+		<string>https://github.com/deeptikochar/lantern.git</string>
 		<key>F19CCC0FE5DD4DE525662DB97260C1489706EB8A</key>
 		<string>https://github.com/deeptikochar/MAS-project-ios.git</string>
 	</dict>
@@ -20,18 +22,28 @@
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>0CC4CE13E0DBA16FD1119C6E8E8F0C80DC233E7B</key>
+		<string>../../../MAS-project-ios</string>
+		<key>EB36781D7E3F98E58DBE66B116E93D6655B0FA74</key>
 		<string>../..</string>
 		<key>F19CCC0FE5DD4DE525662DB97260C1489706EB8A</key>
 		<string>../../../MAS%20project</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/adityakadur/lantern.git</string>
+	<string>https://github.com/deeptikochar/lantern.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>0CC4CE13E0DBA16FD1119C6E8E8F0C80DC233E7B</string>
+	<string>EB36781D7E3F98E58DBE66B116E93D6655B0FA74</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>EB36781D7E3F98E58DBE66B116E93D6655B0FA74</string>
+			<key>IDESourceControlWCCName</key>
+			<string>lantern</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

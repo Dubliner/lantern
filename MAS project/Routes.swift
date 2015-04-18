@@ -107,70 +107,70 @@ class Routes: UIViewController, GMSMapViewDelegate {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 var seeif = 1
                         println("from outside:\(self.destLat)")
-//                let json = JSON(data: data) // put data not the encoded one
-//                let routesList : Array = json["response"]["routes"].array!
-//                let routeScore : Array = json["response"]["score"].array!
-//                let routeIndex : Array = json["response"]["route_index"].array!
-//                
-//                for i in 0...routesList.count-1{
-//                    self.scores.append(routeScore[i].int!)
-//                    self.indices.append(routeIndex[i].int!)
-//                }
-//                
-//                self.routes = Array<Array<CLLocationCoordinate2D>>()
-//                
-//                /* Paths to render */
-//                self.pathList = Array<GMSMutablePath>()
-//                
-//                for i in 0...routesList.count-1{
-//                    var currRoute = routesList[i]["legs"][0] // no waypoints set
-//                    var currSteps = currRoute["steps"]
-//                    var routesItem = Array<CLLocationCoordinate2D>()
-//                    
-//                    var currPath = GMSMutablePath()
-//                    for j in 0...currSteps.count-1{ // notice the index
-//                        var currStep = currSteps[j]
-//                        
-//                        var currStart = currStep["start_location"]
-//                        var testcurr = currStep["start_location"]["lat"]
-////                        println(testcurr)
-//                        var startCoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(currStart["lat"].double!, currStart["lng"].double!)
-//                        routesItem.append(startCoord)
-//                        
-//                        var currEnd = currStep["end_location"]
-//                        var endCoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(currEnd["lat"].double!, currEnd["lng"].double!)
-//                        routesItem.append(endCoord)
-//                        
-//                        currPath.addCoordinate(startCoord)
-//                        currPath.addCoordinate(endCoord)
-//                    }
-//                    self.routes.append(routesItem)
-//                    self.pathList.append(currPath)
-//                }
-//            
-//                
-//                /* Render paths on map */
-//                var R = CGFloat(20)
-//                var G = CGFloat(20)
-//                var B = CGFloat(20)
-////                let polycolor = UIColor(red: R/255.0, green: G/255.0, blue: B/255.0, alpha: 1.0)
-////                var polyline = GMSPolyline(path : pathList[0])
-////                polyline.spans = [GMSStyleSpan(color: polycolor)]
-////                polyline.map = mapView
-//                for i in 0...self.pathList.count-1{
-//                    
-//                    let polycolor = UIColor(red: R/255.0, green: G/255.0, blue: B/255.0, alpha: 1.0)
-//                    var polyline = GMSPolyline(path : self.pathList[i])
-//                    polyline.spans = [GMSStyleSpan(color: polycolor)]
-//                    polyline.strokeWidth = CGFloat(6.0)
-//                    polyline.map = mapView
-//                    
-//                    R = CGFloat(R+50)
-//                    G = CGFloat(G+50)
-//                    B = CGFloat(B+50)
-//                    
-//                }
-//                
+                let json = JSON(data: data) // put data not the encoded one
+                let routesList : Array = json["response"]["routes"].array!
+                let routeScore : Array = json["response"]["score"].array!
+                let routeIndex : Array = json["response"]["route_index"].array!
+                
+                for i in 0...routesList.count-1{
+                    self.scores.append(routeScore[i].int!)
+                    self.indices.append(routeIndex[i].int!)
+                }
+                
+                self.routes = Array<Array<CLLocationCoordinate2D>>()
+                
+                /* Paths to render */
+                self.pathList = Array<GMSMutablePath>()
+                
+                for i in 0...routesList.count-1{
+                    var currRoute = routesList[i]["legs"][0] // no waypoints set
+                    var currSteps = currRoute["steps"]
+                    var routesItem = Array<CLLocationCoordinate2D>()
+                    
+                    var currPath = GMSMutablePath()
+                    for j in 0...currSteps.count-1{ // notice the index
+                        var currStep = currSteps[j]
+                        
+                        var currStart = currStep["start_location"]
+                        var testcurr = currStep["start_location"]["lat"]
+//                        println(testcurr)
+                        var startCoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(currStart["lat"].double!, currStart["lng"].double!)
+                        routesItem.append(startCoord)
+                        
+                        var currEnd = currStep["end_location"]
+                        var endCoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(currEnd["lat"].double!, currEnd["lng"].double!)
+                        routesItem.append(endCoord)
+                        
+                        currPath.addCoordinate(startCoord)
+                        currPath.addCoordinate(endCoord)
+                    }
+                    self.routes.append(routesItem)
+                    self.pathList.append(currPath)
+                }
+            
+                
+                /* Render paths on map */
+                var R = CGFloat(20)
+                var G = CGFloat(20)
+                var B = CGFloat(20)
+//                let polycolor = UIColor(red: R/255.0, green: G/255.0, blue: B/255.0, alpha: 1.0)
+//                var polyline = GMSPolyline(path : pathList[0])
+//                polyline.spans = [GMSStyleSpan(color: polycolor)]
+//                polyline.map = mapView
+                for i in 0...self.pathList.count-1{
+                    
+                    let polycolor = UIColor(red: R/255.0, green: G/255.0, blue: B/255.0, alpha: 1.0)
+                    var polyline = GMSPolyline(path : self.pathList[i])
+                    polyline.spans = [GMSStyleSpan(color: polycolor)]
+                    polyline.strokeWidth = CGFloat(6.0)
+                    polyline.map = mapView
+                    
+                    R = CGFloat(R+50)
+                    G = CGFloat(G+50)
+                    B = CGFloat(B+50)
+                    
+                }
+//
 //                println("routes count: \(routesDraw.count)")
 //                println("route 1 step ct: \(routesDraw[1].count)")
 

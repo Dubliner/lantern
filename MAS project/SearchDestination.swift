@@ -28,12 +28,12 @@ class SearchDestination: UIViewController {
 //    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if (segue.identifier == "segueTest") {
-//            var svc = segue.destinationViewController as! Routes;
-//            svc.destString = inputDest.text
-//            println("inputdest:\(inputDest.text)")
+        if (segue.identifier == "segueTest") {
+            var svc = segue.destinationViewController as! Routes;
+            svc.destString = inputDest.text
+            println("inputdest:\(inputDest.text)")
         }
-//    }
+    }
     
     
 }
