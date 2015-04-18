@@ -115,21 +115,21 @@ class Routes: UIViewController, GMSMapViewDelegate {
                 let routenegHeatmap : Array = json["response"]["heatmap"]["negative"].array!
 
                 // Display heatmaps
-                for i in 0...routeposHeatmap.count-1{
-                    var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(routeposHeatmap[i]["loc"]["coordinates"][0].double!, routeposHeatmap[i]["loc"]["coordinates"][1].double!)
-                    var weight : Int
-                    weight = routeposHeatmap[i]["weight"].int!
-                    var value: Int
-                    value = routeposHeatmap[i]["value"].int!
-                    println(pointcoord)
-                    println(weight)
-                    println(value)
-                    
-                    var circ = GMSCircle(position: pointcoord, radius: 50)
-                    circ.fillColor = UIColor(red: 0.5, green: 0, blue: 0, alpha: 0.2)
-                    circ.strokeColor = UIColor.redColor()
-                    circ.map = mapView;
-                }
+//                for i in 0...routeposHeatmap.count-1{
+//                    var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(routeposHeatmap[i]["loc"]["coordinates"][0].double!, routeposHeatmap[i]["loc"]["coordinates"][1].double!)
+//                    var weight : Int
+//                    weight = routeposHeatmap[i]["weight"].int!
+//                    var value: Int
+//                    value = routeposHeatmap[i]["value"].int!
+//                    println(pointcoord)
+//                    println(weight)
+//                    println(value)
+//                    
+//                    var circ = GMSCircle(position: pointcoord, radius: 50)
+//                    circ.fillColor = UIColor(red: 0.5, green: 0, blue: 0, alpha: 0.2)
+//                    circ.strokeColor = UIColor.redColor()
+//                    circ.map = mapView;
+//                }
                 
                 for i in 0...routesList.count-1{
                     self.scores.append(routeScore[i].int!)

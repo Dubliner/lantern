@@ -21,7 +21,7 @@ class Initial: UIViewController, GMSMapViewDelegate {
         
         
         
-        var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 15) // coc 33.777442, longitude: -84.397217, zoom: 14
+        var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 15)
         mapView.camera = camera
         mapView.myLocationEnabled = true
         mapView.settings.compassButton = true
@@ -44,7 +44,6 @@ class Initial: UIViewController, GMSMapViewDelegate {
                 let points : Array = json["response"].array!
                 
                 for i in 0...points.count-1{
-//                    //do something
                     println(points[i])
                     var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(points[i]["loc"]["coordinates"][0].double!, points[i]["loc"]["coordinates"][1].double!)
                     var weight : Int
@@ -55,14 +54,10 @@ class Initial: UIViewController, GMSMapViewDelegate {
                     println(weight)
                     println(value)
                     
-                    dispatch_async(dispatch_get_main_queue(), {
                     var circ = GMSCircle(position: pointcoord, radius: 3)
                     circ.fillColor = UIColor(red: 0.35, green: 0, blue: 0, alpha: 0.05)
                     circ.strokeColor = UIColor.redColor()
 //                    circ.map = self.mapView;
-                    });
-                    
-                    
                 }
                 
             })
