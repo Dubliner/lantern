@@ -13,7 +13,7 @@ import Foundation
 
 
 
-class Initial: UIViewController {
+class Initial: UIViewController, GMSMapViewDelegate {
     @IBOutlet weak var mapView: GMSMapView!
     
     override func viewDidLoad() {
@@ -40,12 +40,48 @@ class Initial: UIViewController {
         self.view = mapView
         */
         
-        var url : NSString = "http://173.236.254.243:8080/heatmaps/positive?lat=32.725371&lng= -117.160721&radius=2500&total=2"
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
-            println(NSString(data: data, encoding: NSUTF8StringEncoding))
-        }
+
+        var url : NSString = "http://173.236.254.243:8080/heatmaps/positive?lat=32.725371&lng=%20-117.160721&radius=2500&total=2"
+        var queryURL : NSURL = NSURL(string: url as String)!
         
+        let task = NSURLSession.sharedSession().dataTaskWithURL(queryURL) {(data, response, error) in
+            
+            var myJSON = NSString(data: data, encoding: NSUTF8StringEncoding)
+//            println(myJSON)
+            
+            /* Return to main thread so we can make call to Google Map SDK */
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                var seeif = 1
+                let json = JSON(data: data) // put data not the encoded one
+                
+                println(json)
+                let points : Array = json["response"].array!
+                
+//                self.routes = Array<Array<CLLocationCoordinate2D>>()
+                
+                
+                for i in 0...points.count-1{
+//                    //do something
+                    println(points[i])
+                    var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(points[i]["loc"]["coordinates"][0].double!, points[i]["loc"]["coordinates"][1].double!)
+                    var weight : Int
+                    weight = points[i]["weight"].int!
+                    var value: Int
+                    value = points[i]["value"].int!
+                    println(pointcoord)
+                    println(weight)
+                    println(value)
+                    
+                    
+                    
+                }
+                
+            })
+        }
+        //    
+        //        
         task.resume()
+        
 
             
 
