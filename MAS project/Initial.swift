@@ -19,7 +19,7 @@ class Initial: UIViewController, GMSMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 15)
+        var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 13)
         var mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
         mapView.camera = camera
         mapView.myLocationEnabled = true
@@ -56,14 +56,15 @@ class Initial: UIViewController, GMSMapViewDelegate {
                     weight = points[i]["weight"].int!
                     var value: Int
                     value = points[i]["value"].int!
-                    println(pointcoord)
+                    println(pointcoord.latitude)
+                    println(pointcoord.longitude)
                     println(weight)
                     println(value)
                     
                     var circ = GMSCircle(position: pointcoord, radius: 3)
                     circ.fillColor = UIColor(red: 0.35, green: 0, blue: 0, alpha: 0.05)
                     circ.strokeColor = UIColor.redColor()
-//                    circ.map = self.mapView;
+//                    circ.map = mapView;
                 }
                 
             })
