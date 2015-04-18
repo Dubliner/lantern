@@ -33,7 +33,7 @@ class Routes: UIViewController, GMSMapViewDelegate {
         super.viewDidLoad()
         println(self.destString)
     
-        var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 17) // coc 33.777442, longitude: -84.397217, zoom: 14
+        var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 15) // coc 33.777442, longitude: -84.397217, zoom: 14
         var mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
         mapView.myLocationEnabled = true
         self.view = mapView
@@ -111,6 +111,25 @@ class Routes: UIViewController, GMSMapViewDelegate {
                 let routesList : Array = json["response"]["routes"].array!
                 let routeScore : Array = json["response"]["score"].array!
                 let routeIndex : Array = json["response"]["route_index"].array!
+                let routeposHeatmap : Array = json["response"]["heatmap"]["positive"].array!
+                let routenegHeatmap : Array = json["response"]["heatmap"]["negative"].array!
+
+                // Display heatmaps
+                for i in 0...routeposHeatmap.count-1{
+                    var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(routeposHeatmap[i]["loc"]["coordinates"][0].double!, routeposHeatmap[i]["loc"]["coordinates"][1].double!)
+                    var weight : Int
+                    weight = routeposHeatmap[i]["weight"].int!
+                    var value: Int
+                    value = routeposHeatmap[i]["value"].int!
+                    println(pointcoord)
+                    println(weight)
+                    println(value)
+                    
+                    var circ = GMSCircle(position: pointcoord, radius: 50)
+                    circ.fillColor = UIColor(red: 0.5, green: 0, blue: 0, alpha: 0.2)
+                    circ.strokeColor = UIColor.redColor()
+                    circ.map = mapView;
+                }
                 
                 for i in 0...routesList.count-1{
                     self.scores.append(routeScore[i].int!)
@@ -170,6 +189,8 @@ class Routes: UIViewController, GMSMapViewDelegate {
                     B = CGFloat(B+50)
                     
                 }
+                
+                
 //
 //                println("routes count: \(routesDraw.count)")
 //                println("route 1 step ct: \(routesDraw[1].count)")

@@ -23,23 +23,9 @@ class Initial: UIViewController, GMSMapViewDelegate {
         
         var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 15) // coc 33.777442, longitude: -84.397217, zoom: 14
         mapView.camera = camera
-        //var mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
-        // mapView.myLocationEnabled = true
-        //self.view = mapView
-        
-        
-        /*var camera = GMSCameraPosition.cameraWithLatitude(37.80948,
-        longitude:5.965699, zoom:2)
-        var mapView = GMSMapView.mapWithFrame(CGRectZero, camera:camera)
-        
-        // Available map types: kGMSTypeNormal, kGMSTypeSatellite, kGMSTypeHybrid,
-        // kGMSTypeTerrain, kGMSTypeNone
-        
-        // Set the mapType to Satellite
-        mapView.mapType = kGMSTypeSatellite
-        self.view = mapView
-        */
-        
+        mapView.myLocationEnabled = true
+        mapView.settings.compassButton = true
+        mapView.settings.myLocationButton = true
 
         var url : NSString = "http://173.236.254.243:8080/heatmaps/positive?lat=32.725371&lng=%20-117.160721&radius=2500&total=2"
         var queryURL : NSURL = NSURL(string: url as String)!
@@ -57,9 +43,6 @@ class Initial: UIViewController, GMSMapViewDelegate {
                 println(json)
                 let points : Array = json["response"].array!
                 
-//                self.routes = Array<Array<CLLocationCoordinate2D>>()
-                
-                
                 for i in 0...points.count-1{
 //                    //do something
                     println(points[i])
@@ -72,6 +55,12 @@ class Initial: UIViewController, GMSMapViewDelegate {
                     println(weight)
                     println(value)
                     
+                    dispatch_async(dispatch_get_main_queue(), {
+                    var circ = GMSCircle(position: pointcoord, radius: 3)
+                    circ.fillColor = UIColor(red: 0.35, green: 0, blue: 0, alpha: 0.05)
+                    circ.strokeColor = UIColor.redColor()
+//                    circ.map = self.mapView;
+                    });
                     
                     
                 }
