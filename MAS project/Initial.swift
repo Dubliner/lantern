@@ -14,18 +14,19 @@ import Foundation
 
 
 class Initial: UIViewController, GMSMapViewDelegate {
-    @IBOutlet weak var mapView: GMSMapView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
+
         var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 15)
+        var mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
         mapView.camera = camera
         mapView.myLocationEnabled = true
         mapView.settings.compassButton = true
         mapView.settings.myLocationButton = true
+        self.view = mapView
+        
 
         var url : NSString = "http://173.236.254.243:8080/heatmaps/positive?lat=32.725371&lng=%20-117.160721&radius=2500&total=2"
         var queryURL : NSURL = NSURL(string: url as String)!
@@ -37,6 +38,11 @@ class Initial: UIViewController, GMSMapViewDelegate {
             
             /* Return to main thread so we can make call to Google Map SDK */
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                var marker = GMSMarker()
+                marker.position = CLLocationCoordinate2DMake(33.777442, -84.397217)
+                marker.title = "Sydney"
+                marker.snippet = "Australia"
+                marker.map = mapView
                 var seeif = 1
                 let json = JSON(data: data) // put data not the encoded one
                 

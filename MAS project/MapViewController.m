@@ -15,12 +15,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.mapView.myLocationEnabled = YES;
-    self.mapView.mapType = kGMSTypeNormal;
-    self.mapView.settings.compassButton = YES;
-    self.mapView.settings.myLocationButton = YES;
-    self.mapView.delegate = self;
-    
+
 }
 
 - (void) didReceiveMemoryWarning
