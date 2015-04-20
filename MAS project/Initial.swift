@@ -15,6 +15,9 @@ import Foundation
 
 class Initial: UIViewController, GMSMapViewDelegate {
     
+    func next_screen(sender: UIButton!) {
+        performSegueWithIdentifier("segue_initial1", sender: sender);
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,15 +31,17 @@ class Initial: UIViewController, GMSMapViewDelegate {
         self.view = mapView
         
         NSLog("Here we are");
-        var button1 = UIButton(frame: CGRectMake(10, -20, 100, 40));
+//        var X_Co = self.view.frame.size.width - 100;
+//        var Y_Co = self.view.frame.size.height - 40;
+        var button1 = UIButton(frame: CGRectMake(30, 550, 300, 40));
+//        button1.center.x = self.view.frame.size.width/2;
         button1.titleLabel!.text = "Where do you want to go?";
-        button1.titleLabel!.textColor = UIColor.grayColor();
+        button1.titleLabel!.textColor = UIColor.blackColor();
         button1.titleLabel!.textAlignment = .Center;
-        button1.addTarget(self, action: "next_screen", forControlEvents: UIControlEvents.TouchUpInside);
+        button1.backgroundColor = UIColor.whiteColor();
+        button1.addTarget(self, action: Selector("next_screen:"), forControlEvents: UIControlEvents.TouchUpInside);
         
         self.view.addSubview(button1);
-        
-        
 
         var url : NSString = "http://173.236.254.243:8080/heatmaps/positive?lat=32.725371&lng=%20-117.160721&radius=2500&total=2"
         var queryURL : NSURL = NSURL(string: url as String)!
@@ -88,9 +93,7 @@ class Initial: UIViewController, GMSMapViewDelegate {
 
     }
     
-    @IBAction func next_screen(sender: AnyObject) {
-        performSegueWithIdentifier("segue_initial1", sender: sender);
-    }
+    
     
     
     override func didReceiveMemoryWarning() {
