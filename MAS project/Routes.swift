@@ -30,10 +30,10 @@ class Routes: UIViewController, GMSMapViewDelegate {
     
     func next_screen(sender: UIButton!) {
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://173.236.254.243:8080")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://173.236.254.243:8080/routes/select/1425850320099")!)
         request.HTTPMethod = "POST"
-        let postString = "routes/select/1425850320099"
-        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+//        let postString = "routes/select/1425850320099"
+//        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
             data, response, error in
             

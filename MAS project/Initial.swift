@@ -22,7 +22,7 @@ class Initial: UIViewController, GMSMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 13)
+        var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 15)
         var mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
         mapView.camera = camera
         mapView.myLocationEnabled = true
@@ -43,7 +43,7 @@ class Initial: UIViewController, GMSMapViewDelegate {
         
         self.view.addSubview(button1);
 
-        var url : NSString = "http://173.236.254.243:8080/heatmaps/positive?lat=32.725371&lng=%20-117.160721&radius=2500&total=2"
+        var url : NSString = "http://173.236.254.243:8080/heatmaps/positive?lat=33.777442&lng=-84.397217&radius=2500&total=2"
         var queryURL : NSURL = NSURL(string: url as String)!
         
         let task = NSURLSession.sharedSession().dataTaskWithURL(queryURL) {(data, response, error) in
@@ -66,20 +66,20 @@ class Initial: UIViewController, GMSMapViewDelegate {
                 
                 for i in 0...points.count-1{
                     println(points[i])
-                    var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(points[i]["loc"]["coordinates"][0].double!, points[i]["loc"]["coordinates"][1].double!)
+                    var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(points[i]["loc"]["coordinates"][1].double!, points[i]["loc"]["coordinates"][0].double!)
                     var weight : Int
                     weight = points[i]["weight"].int!
                     var value: Int
-                    value = points[i]["value"].int!
+                  //  value = points[i]["value"].int!
                     println(pointcoord.latitude)
                     println(pointcoord.longitude)
                     println(weight)
-                    println(value)
+                    //println(value)
                     
-                    var circ = GMSCircle(position: pointcoord, radius: 3)
-                    circ.fillColor = UIColor(red: 0.35, green: 0, blue: 0, alpha: 0.05)
+                    var circ = GMSCircle(position: pointcoord, radius: 5)
+                    circ.fillColor = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
                     circ.strokeColor = UIColor.redColor()
-//                    circ.map = mapView;
+                    circ.map = mapView;
                 }
                 
             })
