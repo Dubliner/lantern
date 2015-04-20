@@ -28,6 +28,28 @@ class Routes: UIViewController, GMSMapViewDelegate {
     var pathPicked : Int = 0
     var indexPicked : Int = 0
     
+    func next_screen(sender: UIButton!) {
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://173.236.254.243:8080")!)
+        request.HTTPMethod = "POST"
+        let postString = "routes/select/1425850320099"
+        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+            data, response, error in
+            
+            if error != nil {
+                println("error=\(error)")
+                return
+            }
+            
+            println("response = \(response)")
+            
+            let responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
+            println("responseString = \(responseString)")
+        }
+        task.resume()
+        performSegueWithIdentifier("segue_route", sender: sender);
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +59,17 @@ class Routes: UIViewController, GMSMapViewDelegate {
         var mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
         mapView.myLocationEnabled = true
         self.view = mapView
+        
+        var button1 = UIButton(frame: CGRectMake(30, 550, 300, 40));
+        //        button1.center.x = self.view.frame.size.width/2;
+        button1.titleLabel!.text = "Select route";
+        button1.titleLabel!.textColor = UIColor.blackColor();
+        button1.titleLabel!.textAlignment = .Center;
+        button1.backgroundColor = UIColor.whiteColor();
+        button1.addTarget(self, action: Selector("next_screen:"), forControlEvents: UIControlEvents.TouchUpInside);
+        
+        self.view.addSubview(button1);
+
         
         
         var address = destString//"tech tower, GA, USA"//"1 Infinite Loop, CA, USA"

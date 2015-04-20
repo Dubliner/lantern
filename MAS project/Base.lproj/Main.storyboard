@@ -81,9 +81,6 @@
                                 <state key="normal" title="Button">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="1DN-UX-yrk" kind="show" id="mM9-IU-liL"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -98,15 +95,18 @@
                             <constraint firstItem="pbJ-uB-2P9" firstAttribute="centerY" secondItem="Cwb-Vz-SGu" secondAttribute="centerY" id="q8Q-nx-NUM"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <segue destination="1DN-UX-yrk" kind="show" identifier="segue_route" id="YDw-Bv-cvw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nwK-QR-kR1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2438" y="252"/>
+            <point key="canvasLocation" x="2346" y="260"/>
         </scene>
-        <!--View Controller-->
+        <!--Navigation-->
         <scene sceneID="qeR-0h-aDm">
             <objects>
-                <viewController id="1DN-UX-yrk" sceneMemberID="viewController">
+                <viewController id="1DN-UX-yrk" customClass="navigation" customModule="MAS_project" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5Ac-cs-eYd"/>
                         <viewControllerLayoutGuide type="bottom" id="sKh-f9-WMc"/>
@@ -114,22 +114,11 @@
                     <view key="view" contentMode="scaleToFill" id="6gw-9k-o69">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zg0-3R-XQU">
-                                <rect key="frame" x="113" y="550" width="47" height="30"/>
-                                <state key="normal" title="Report">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VCX-aJ-CdV">
-                                <rect key="frame" x="431" y="550" width="30" height="30"/>
-                                <state key="normal" title="End">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="KL7-yd-cje" kind="show" identifier="segue_end" id="rx6-Br-4Qd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eYP-Pc-bGb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -157,7 +146,7 @@
                                 </state>
                                 <connections>
                                     <action selector="login_button:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6lj-kb-rbe"/>
-                                    <segue destination="KL7-yd-cje" kind="presentation" id="W8s-U6-Odp"/>
+                                    <segue destination="KL7-yd-cje" kind="presentation" identifier="segue_routes" id="W8s-U6-Odp"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -260,10 +249,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AMK-6y-pDF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="917" y="260"/>
+            <point key="canvasLocation" x="809" y="276"/>
         </scene>
     </scenes>
     <resources>
         <image name="search_button.png" width="114" height="114"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="rx6-Br-4Qd"/>
+    </inferredMetricsTieBreakers>
 </document>
