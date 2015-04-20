@@ -393,4 +393,12 @@ class Routes: UIViewController, GMSMapViewDelegate {
         return task
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "segue_route") {
+            var svc = segue.destinationViewController as! navigation;
+//            svc.destString = inputDest.text
+//            println("inputdest:\(inputDest.text)")
+        }
+    }
+    
 }
