@@ -198,9 +198,6 @@
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="hyR-UE-JOe" kind="presentation" id="BMG-nB-GDf"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ttp-NB-ACu">
                                 <rect key="frame" x="544" y="560" width="40" height="40"/>
@@ -211,9 +208,6 @@
                                 <state key="normal" backgroundImage="search_button.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="hyR-UE-JOe" kind="show" id="PKa-pD-rDL"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -260,16 +254,16 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <segue destination="hyR-UE-JOe" kind="show" identifier="segue_initial1" id="MHP-4k-EOM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AMK-6y-pDF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="939" y="289"/>
+            <point key="canvasLocation" x="917" y="260"/>
         </scene>
     </scenes>
     <resources>
         <image name="search_button.png" width="114" height="114"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="PKa-pD-rDL"/>
-    </inferredMetricsTieBreakers>
 </document>
