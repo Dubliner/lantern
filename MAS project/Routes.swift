@@ -29,8 +29,9 @@ class Routes: UIViewController, GMSMapViewDelegate {
     var indexPicked : Int = 0
     
     func next_screen(sender: UIButton!) {
-        
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://173.236.254.243:8080/routes/select/1425850320099")!)
+        var url = "http://173.236.254.243:8080/routes/select/";
+        url += indexPicked.description;
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.HTTPMethod = "POST"
 //        let postString = "routes/select/1425850320099"
 //        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
