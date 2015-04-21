@@ -159,8 +159,8 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         self.negative_heatmap = self.fromRoutes.hNmap
         super.viewDidLoad()
         NSLog(route_index!);
-        println(self.myPath.description)
-        println("path end")
+//        println(self.myPath.description)
+//        println("path end")
         
         self.view_width = self.view.frame.size.width;
         self.view_height = self.view.frame.size.height;
@@ -175,8 +175,8 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         var mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
         mapView.camera = camera
         mapView.myLocationEnabled = true
-        mapView.settings.compassButton = true
-        mapView.settings.myLocationButton = true
+//        mapView.settings.compassButton = true
+//        mapView.settings.myLocationButton = true
         self.view = mapView
         
         /* Render Route: */
@@ -187,29 +187,33 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         polyline.map = mapView
         
         // Render positive heatmap
-        for i in 0...positive_heatmap.count-1{
-            var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(positive_heatmap[i]["loc"]["coordinates"][1].double!, positive_heatmap[i]["loc"]["coordinates"][0].double!)
-            var weight : Int
-            weight = positive_heatmap[i]["weight"].int!
+        if(positive_heatmap.count > 0) {
+            for i in 0...positive_heatmap.count-1{
+                var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(positive_heatmap[i]["loc"]["coordinates"][1].double!, positive_heatmap[i]["loc"]["coordinates"][0].double!)
+                var weight : Int
+                weight = positive_heatmap[i]["weight"].int!
             
-            var circ = GMSCircle(position: pointcoord, radius: 5)
-            circ.fillColor = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
-            circ.strokeColor = UIColor.redColor()
-            circ.map = mapView;
+                var circ = GMSCircle(position: pointcoord, radius: 5)
+                circ.fillColor = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
+                circ.strokeColor = UIColor.redColor()
+                circ.map = mapView;
+        }
         }
         
         // Render negative heatmap
-        for i in 0...negative_heatmap.count-1{
-            var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(negative_heatmap[i]["loc"]["coordinates"][1].double!, negative_heatmap[i]["loc"]["coordinates"][0].double!)
-            var weight : Int
-            weight = negative_heatmap[i]["weight"].int!
-            var circ = GMSCircle(position: pointcoord, radius: 5)
-            circ.fillColor = self.hexStringToUIColor("#6495ED")
-            circ.strokeColor = self.hexStringToUIColor("#6495ED")
-            circ.map = mapView;
+        if(negative_heatmap.count > 0) {
+            for i in 0...negative_heatmap.count-1{
+                var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(negative_heatmap[i]["loc"]["coordinates"][1].double!, negative_heatmap[i]["loc"]["coordinates"][0].double!)
+                var weight : Int
+                weight = negative_heatmap[i]["weight"].int!
+                var circ = GMSCircle(position: pointcoord, radius: 5)
+                circ.fillColor = self.hexStringToUIColor("#6495ED")
+                circ.strokeColor = self.hexStringToUIColor("#6495ED")
+                circ.map = mapView;
+            }
         }
         
-        NSLog("Here we are");
+//        NSLog("Here we are");
         var button1 = UIButton(frame: CGRectMake(25, view_height - 60, view_width/2 - 35, 40));
         button1.setTitle("Report", forState: .Normal);
         button1.setTitleColor(UIColor.whiteColor(), forState: .Normal);
@@ -236,7 +240,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
     func report_lighting(sender: UIButton!) {
         if(sender.tag == 1)
         {
-            NSLog("1 star");
+//            NSLog("1 star");
             report_buttons[0].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             report_buttons[1].setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
             report_buttons[2].setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
@@ -246,7 +250,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         }
         else if(sender.tag == 2)
         {
-            NSLog("2 stars");
+//            NSLog("2 stars");
             report_buttons[0].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             report_buttons[1].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             report_buttons[2].setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
@@ -256,7 +260,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         }
         if(sender.tag == 3)
         {
-            NSLog("3 stars");
+//            NSLog("3 stars");
             report_buttons[0].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             report_buttons[1].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             report_buttons[2].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
@@ -266,7 +270,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         }
         if(sender.tag == 4)
         {
-            NSLog("4 stars");
+//            NSLog("4 stars");
             report_buttons[0].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             report_buttons[1].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             report_buttons[2].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
@@ -276,7 +280,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         }
         if(sender.tag == 5)
         {
-            NSLog("5 stars");
+//            NSLog("5 stars");
             report_buttons[0].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             report_buttons[1].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             report_buttons[2].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
@@ -288,7 +292,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
     
     func send_lighting_report(sender: UIButton!) {
         lighting.removeFromSuperview();
-        NSLog("sending lighting report");
+//        NSLog("sending lighting report");
         var value = 4*lighting_stars - 10;
         var coord = locationObj.coordinate
         var lat = coord.latitude
@@ -317,7 +321,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
     func close_report_lighting(sender: UIButton) {
         lighting.removeFromSuperview();
         lighting_stars = 0;
-        NSLog("cancelled lighting report");
+//        NSLog("cancelled lighting report");
     }
     
     func end_navigation(sender: UIButton!) {
@@ -343,7 +347,6 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         label.textColor = UIColor.whiteColor()
         label.textAlignment = .Center
 
-        NSLog(star_size.description)
         var one = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
         one.frame = CGRectMake(inner_padding, upper_padding, star_size, star_size);
         one.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
@@ -355,9 +358,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         two.tag = 2;
         two.addTarget(self, action: Selector("set_rating:"), forControlEvents: UIControlEvents.TouchUpInside);
         
-        NSLog(star_size.description)
-        NSLog((inner_padding + star_size).description)
-        NSLog((inner_padding + 2 * star_size).description)
+        
         var three = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
         three.frame = CGRectMake(inner_padding + 2 * star_size, upper_padding, star_size, star_size);
         three.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
@@ -412,7 +413,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
     func set_rating(sender: UIButton!) {
         if(sender.tag == 1)
         {
-            NSLog("1 star");
+//            NSLog("1 star");
             rating_buttons[0].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             rating_buttons[1].setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
             rating_buttons[2].setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
@@ -422,7 +423,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         }
         else if(sender.tag == 2)
         {
-            NSLog("2 stars");
+//            NSLog("2 stars");
             rating_buttons[0].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             rating_buttons[1].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             rating_buttons[2].setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
@@ -432,7 +433,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         }
         if(sender.tag == 3)
         {
-            NSLog("3 stars");
+//            NSLog("3 stars");
             rating_buttons[0].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             rating_buttons[1].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             rating_buttons[2].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
@@ -442,7 +443,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         }
         if(sender.tag == 4)
         {
-            NSLog("4 stars");
+//            NSLog("4 stars");
             rating_buttons[0].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             rating_buttons[1].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             rating_buttons[2].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
@@ -452,7 +453,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         }
         if(sender.tag == 5)
         {
-            NSLog("5 stars");
+//            NSLog("5 stars");
             rating_buttons[0].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             rating_buttons[1].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
             rating_buttons[2].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
@@ -467,7 +468,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         var value = 4*rating_stars - 10;
         // http://173.236.254.243:8080/routes/rate/1428192333326?rating=10&day=true
         var url = "http://173.236.254.243:8080/routes/rate/" + route_index! + "?rating=" + value.description + "&day=true"
-        NSLog(url);
+//        NSLog(url);
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.HTTPMethod = "POST"
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
@@ -501,9 +502,9 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
             var locationArray = locations as NSArray
             self.locationObj = locationArray.lastObject as! CLLocation
         var point = locationObj.coordinate;
-        NSLog("Location:");
-        NSLog(point.latitude.description);
-        NSLog(manager.location.description);
+//        NSLog("Location:");
+//        NSLog(point.latitude.description);
+//        NSLog(manager.location.description);
     }
     
     func hexStringToUIColor (hex:String) -> UIColor {

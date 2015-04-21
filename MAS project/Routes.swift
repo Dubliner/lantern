@@ -95,12 +95,12 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
             var destGeoURL : NSURL = NSURL(string: destStr as String)!
             
             
-            println("outter most")
+//            println("outter most")
             let geocoderTask = NSURLSession.sharedSession().dataTaskWithURL(destGeoURL) {(dataGeo, response, error) in
                 //                println(NSString(data: dataGeo, encoding: NSUTF8StringEncoding))
                 // main thread:
                 //                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                println("in dest")
+//                println("in dest")
                 var geoReply = JSON(data: dataGeo)
                 //                    println(geoReply)
                 var results = geoReply["results"].array!
@@ -109,12 +109,12 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
 
                 self.destLat = "\(destCoord.latitude)"
                 self.destLng = "\(destCoord.longitude)"
-                println("finished dest")
-                
-                println("in location start")
-                
-                println("locations = \(locations)")
-                println("description:"+locations.description)
+//                println("finished dest")
+//                
+//                println("in location start")
+//                
+//                println("locations = \(locations)")
+//                println("description:"+locations.description)
                 var startCoord : NSString = locations.description
                 var coordHead = startCoord.rangeOfString("<").location+2 // <+
                 var coordTail = startCoord.rangeOfString(">").location-1 // >
@@ -138,7 +138,7 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                 let task = NSURLSession.sharedSession().dataTaskWithURL(queryURL) {(data, response, error) in
                     
                     var myJSON = NSString(data: data, encoding: NSUTF8StringEncoding)
-                    println(myJSON)
+//                    println(myJSON)
                     /* Return to main thread so we can make call to Google Map SDK */
                     dispatch_sync(dispatch_get_main_queue(), { () -> Void in
                         var seeif = 1
@@ -154,17 +154,32 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                         self.Nmap = routenegHeatmap
                         
                         //                                             Display heatmaps
-                        for i in 0...routeposHeatmap.count-1{
-                            var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(routeposHeatmap[i]["loc"]["coordinates"][1].double!, routeposHeatmap[i]["loc"]["coordinates"][0].double!)
-                            var weight : Int
-                            weight = routeposHeatmap[i]["weight"].int!
-                            
-                            var circ = GMSCircle(position: pointcoord, radius: 5)
-                            circ.fillColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.2)
-                            circ.fillColor = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
-                            circ.strokeColor = UIColor.redColor()
-                            circ.map = self.mapView;
+                        if(routeposHeatmap.count > 0) {
+                            for i in 0...routeposHeatmap.count-1{
+                                var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(routeposHeatmap[i]["loc"]["coordinates"][1].double!, routeposHeatmap[i]["loc"]["coordinates"][0].double!)
+//                            var weight : Int
+//                            weight = routeposHeatmap[i]["weight"].int!
+//                            println(weight)
+                                var circ = GMSCircle(position: pointcoord, radius: 5)
+                                circ.fillColor = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
+                                circ.strokeColor = UIColor.redColor()
+                                circ.map = self.mapView;
+                            }
                         }
+                        
+                        if(routenegHeatmap.count > 0) {
+                            for i in 0...routenegHeatmap.count-1{
+                                var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(routenegHeatmap[i]["loc"]["coordinates"][1].double!, routenegHeatmap[i]["loc"]["coordinates"][0].double!)
+//                            var weight : Int
+//                            weight = routenegHeatmap[i]["weight"].int!
+////                            println(weight)
+                                var circ = GMSCircle(position: pointcoord, radius: 5)
+                                circ.fillColor = self.hexStringToUIColor("#6495ED")
+                                circ.strokeColor = self.hexStringToUIColor("#6495ED")
+                                circ.map = self.mapView;
+                            }
+                        }
+                        
                         var max_score = Int.min
 
                         for i in 0...routesList.count-1{
@@ -188,7 +203,6 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                             }
                         }
                         
-                        NSLog("reached here");
                         self.routes = Array<Array<CLLocationCoordinate2D>>()
                         
                         /* Paths to render */
@@ -234,7 +248,7 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                             }
                             var polyline = GMSPolyline(path : self.pathList[i])
                             polyline.spans = [GMSStyleSpan(color: polycolor)]
-                            polyline.strokeWidth = CGFloat(10.0)
+                            polyline.strokeWidth = CGFloat(6.0)
                             polyline.map = self.mapView
                             self.polylineSet.append(polyline)
                             
@@ -242,6 +256,8 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                             G = CGFloat(G+50)
                             B = CGFloat(B+50)
                         }
+                        
+                        self.polylineSet[self.pathPicked].spans = [GMSStyleSpan(color: UIColor.greenColor())]
                         
                         self.label.frame = CGRectMake(0, self.view_height - 40, self.view_width, 40)
                         self.label.backgroundColor = self.hexStringToUIColor("#F3F0ED");
@@ -273,7 +289,7 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
         super.viewDidLoad()
         view_width = self.view.frame.size.width;
         view_height = self.view.frame.size.height;
-        println(self.destString)
+//        println(self.destString)
         
         var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 15) // coc 33.777442, longitude: -84.397217, zoom: 14
         mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
@@ -309,7 +325,7 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
             var bestInd : Int = 0
             var bestScore : Int = Int.min
             for i in 0...self.scores.count-1{
-                println(self.scores[i])
+//                println(self.scores[i])
                 if self.scores[i]>bestScore{
                     bestScore = self.scores[i]
                     bestInd = i
@@ -323,8 +339,8 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                     }
                 }
             }
-            println("bestCandidate:\(bestCandidate)")
-            println("bestInd:\(bestInd)")
+//            println("bestCandidate:\(bestCandidate)")
+//            println("bestInd:\(bestInd)")
         
             if candidates.count==0{
                 self.pathPicked = bestInd
@@ -343,6 +359,7 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                     self.polylineSet[i].spans = [GMSStyleSpan(color: UIColor.grayColor())]
                 }
             }
+            self.polylineSet[self.pathPicked].spans = [GMSStyleSpan(color: UIColor.greenColor())]
         
         
 //            var polyline = GMSPolyline(path : self.pathList[self.pathPicked])
@@ -362,7 +379,7 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
         
             self.label.text = "Score: " + self.scores[self.pathPicked].description;
         
-            println("pathPicked:\(self.pathPicked)")
+//            println("pathPicked:\(self.pathPicked)")
 
     }
     
@@ -393,8 +410,6 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "segue_route") {
             var svc = segue.destinationViewController as! navigation;
-            NSLog("Index picked is")
-            NSLog("%d", indexPicked)
 
             var navigationWrapper = toNavigation(iPick: indexPicked, pPick: self.pathList[self.pathPicked], hPmap: self.Pmap, hNmap: self.Nmap)
             svc.fromRoutes = navigationWrapper

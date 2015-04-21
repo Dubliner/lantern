@@ -43,7 +43,7 @@ class SearchDestination: UIViewController {
             var svc = segue.destinationViewController as! Routes;
             
             svc.destString = inputDest.text // destCoord.latitude.description + "," + destCoord.longitude.description
-            println("destString:\(svc.destString)")
+//            println("destString:\(svc.destString)")
             
             
         }

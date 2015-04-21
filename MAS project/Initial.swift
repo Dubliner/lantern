@@ -29,8 +29,6 @@ class Initial: UIViewController, GMSMapViewDelegate {
 //        mapView.settings.myLocationButton = true
         self.view = mapView
         
-        NSLog("Here we are");
-        
         var label = UILabel(frame: CGRectMake(25, view_height - 120, view_width - 50, 40))
         label.backgroundColor = hexStringToUIColor("#5A5399");
         label.text = "Enter Destination";
@@ -80,7 +78,7 @@ class Initial: UIViewController, GMSMapViewDelegate {
                     var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(points[i]["loc"]["coordinates"][1].double!, points[i]["loc"]["coordinates"][0].double!)
                     var weight : Int
                     weight = points[i]["weight"].int!
-                    var value: Int
+//                    var value: Int
                     //  value = points[i]["value"].int!
                     //                    println(pointcoord.latitude)
                     //                    println(pointcoord.longitude)
@@ -114,15 +112,13 @@ class Initial: UIViewController, GMSMapViewDelegate {
                 for i in 0...points.count-1{
                         //                    println(points[i])
                     var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(points[i]["loc"]["coordinates"][1].double!, points[i]["loc"]["coordinates"][0].double!)
-                    var weight : Int
-                    weight = points[i]["weight"].int!
-                    var value: Int
-                        //  value = points[i]["value"].int!
-                        //                    println(pointcoord.latitude)
-                        //                    println(pointcoord.longitude)
-                        //                    println(weight)
-                        //println(value)
-                        
+                    var weight : Float
+                    weight = points[i]["weight"].float!
+//                    println(weight)
+//                    var value: Float
+//                    value = points[i]["value"].float!
+//                    println(value)
+//                    var color = UIColor(red: <#CGFloat#>, green: <#CGFloat#>, blue: <#CGFloat#>, alpha: <#CGFloat#>)
                     var circ = GMSCircle(position: pointcoord, radius: 5)
                     circ.fillColor = self.hexStringToUIColor("#6495ED")
                     circ.strokeColor = self.hexStringToUIColor("#6495ED")
