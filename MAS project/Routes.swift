@@ -17,6 +17,7 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
     
     /* Globals: */
     var mapView : GMSMapView!
+    var polylineSet : Array<GMSPolyline> = Array<GMSPolyline>()
     
     var manager : CLLocationManager!
     var startLat : String!
@@ -225,8 +226,9 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                             }
                             var polyline = GMSPolyline(path : self.pathList[i])
                             polyline.spans = [GMSStyleSpan(color: polycolor)]
-                            polyline.strokeWidth = CGFloat(6.0)
+                            polyline.strokeWidth = CGFloat(10.0)
                             polyline.map = self.mapView
+                            self.polylineSet.append(polyline)
                             
                             R = CGFloat(R+50)
                             G = CGFloat(G+50)
@@ -324,12 +326,32 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
             }
             
             self.indexPicked = self.indices[self.pathPicked]
-            
-            var polyline = GMSPolyline(path : self.pathList[self.pathPicked])
-            polyline.spans = [GMSStyleSpan(color: UIColor.greenColor())]
-            polyline.strokeWidth = CGFloat(6.0)
-            polyline.map = mapView
-            
+//            mapView.clear()
+            for i in 0...self.pathList.count-1{
+                if i==self.pathPicked {
+                    self.polylineSet[i].spans = [GMSStyleSpan(color: UIColor.greenColor())]
+                }
+                else {
+                    self.polylineSet[i].spans = [GMSStyleSpan(color: UIColor.grayColor())]
+                }
+            }
+        
+        
+//            var polyline = GMSPolyline(path : self.pathList[self.pathPicked])
+//            polyline.spans = [GMSStyleSpan(color: UIColor.greenColor())]
+//            polyline.strokeWidth = CGFloat(10.0)
+//            polyline.map = mapView
+//        
+//            // paint gray for unselected routes:
+//            for i in 0...pathList.count-1{
+//                if i != pathPicked{
+//                    var polyline = GMSPolyline(path : self.pathList[self.pathPicked])
+//                    polyline.spans = [GMSStyleSpan(color: UIColor.grayColor())]
+//                    polyline.strokeWidth = CGFloat(10.0)
+//                    polyline.map = mapView
+//                }
+//            }
+        
             self.label.text = "Score: " + self.scores[self.pathPicked].description;
         
             println("pathPicked:\(self.pathPicked)")
