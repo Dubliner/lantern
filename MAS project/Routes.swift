@@ -9,14 +9,22 @@
 import UIKit
 import MapKit
 
-class Routes: UIViewController, GMSMapViewDelegate {
+class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ // last get current location
     
 //    struct myvar {
 //        var t : Int = 1
 //    }
+    
+    /* Globals: */
+    var manager : CLLocationManager!
+    var startLat : String!
+    var startLng : String!
+    var startLatLng : String!
+    var startMutex : Bool = true
+    
     var destString: String?
-    var destLat: Double!
-    var destLng: Double!
+    var destLat: String!
+    var destLng: String!
     
     var taplat : Double = 0.0
     var taplng : Double = 0.0
@@ -33,8 +41,7 @@ class Routes: UIViewController, GMSMapViewDelegate {
         url += indexPicked.description;
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.HTTPMethod = "POST"
-//        let postString = "routes/select/1425850320099"
-//        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
             data, response, error in
             
@@ -51,10 +58,37 @@ class Routes: UIViewController, GMSMapViewDelegate {
         task.resume()
         performSegueWithIdentifier("segue_route", sender: sender);
     }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        if(startMutex){
+            println("locations = \(locations)")
+            println("description:"+locations.description)
+            var startCoord : NSString = locations.description
+            var coordHead = startCoord.rangeOfString("<").location+2 // <+
+            var coordTail = startCoord.rangeOfString(">").location-1 // >
+            var coordLength = coordTail - coordHead
+            var startString : String = startCoord as String!
+            startLatLng = startCoord.substringWithRange(NSRange(location:coordHead, length:coordLength))
+            println(coordHead)
+            println(coordTail)
+            println(startLatLng)
+            var startArr = split(startLatLng) {$0 == ","}
+            startLat = startArr[0]
+            startLng = startArr[1]
+            startMutex = false
+        }
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         println(self.destString)
+        
+        manager = CLLocationManager()
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestAlwaysAuthorization()
+        manager.startUpdatingLocation()
     
         var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 15) // coc 33.777442, longitude: -84.397217, zoom: 14
         var mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
@@ -70,65 +104,19 @@ class Routes: UIViewController, GMSMapViewDelegate {
         button1.addTarget(self, action: Selector("next_screen:"), forControlEvents: UIControlEvents.TouchUpInside);
         
         self.view.addSubview(button1);
-
-        
-        
-        var address = destString//"tech tower, GA, USA"//"1 Infinite Loop, CA, USA"
-        var geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
-            if let placemark = placemarks?[0] as? CLPlacemark {
-                println(placemark.location.coordinate.latitude)
-                println(placemark.location.coordinate.longitude)
-                self.destLat = placemark.location.coordinate.latitude
-                self.destLng = placemark.location.coordinate.longitude
-            }
-        })
-//        var marker = GMSMarker()
-//        marker.position = CLLocationCoordinate2DMake(-33.86, 151.20)
-//        marker.title = "Sydney"
-//        marker.snippet = "Australia"
-//        marker.map = mapView
-
-//        var url : NSString =  "http://173.236.254.243:8080/routes?dest={\"lat\":33.781761,\"lng\":-84.405155}&start={\"lat\":33.781940,\"lng\": -84.376917}"
-//        var url : NSString = "http://maps.googleapis.com/maps/api/directions/xml?origin=33.781940,-84.376917&destination=33.781761,-84.405155&sensor=false&units=metric&mode=walking"
-//        var url : NSString = "http://173.236.254.243:8080/heatmaps/negative?lat=32.725371&lng= -117.160721&type=lighting&value=10"
-//        var url : NSString = "http://173.236.254.243:8080/heatmaps/negative?lat=32.725371&lng= -117.160721&radius=2500&total=2"
-        // start coc: 33.777442, -84.397217
-        // end tower: 33.772601, -84.394774
-//       var url : NSString = "http://173.236.254.243:8080/routes?dest={\"lat\":33.779208,\"lng\":-84.397602}&start={\"lat\":33.781777,\"lng\":-84.397709}" // latest working
-        
-        /* Request latitude and longitude given address: */
-//        var destQuery = self.destString!.componentsSeparatedByString(" ") //split(self.destString as String!){$0 == " "}
-//
-//        var queryWrapper = join("+", destQuery)
-//        var destURL : NSString = "https://maps.googleapis.com/maps/api/geocode/json?address="+queryWrapper
-////        var destURL : NSString = "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA"
-//        var destStr : NSString = destURL.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-//        var destGeoURL : NSURL = NSURL(string: destStr as String)!
-//        
-//        let geocoderTask = NSURLSession.sharedSession().dataTaskWithURL(destGeoURL) {(dataGeo, response, error) in
-//            println(NSString(data: dataGeo, encoding: NSUTF8StringEncoding))
-//            // main thread:
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                println("get here")
-//                let geoReply = JSON(data: dataGeo)
-//                let results : Array = geoReply["results"].array!
-//                let geometry = results[0]["geometry"]
-//                let destCoord = geometry["location"]
-//                self.destLat = destCoord["lat"].double!
-//                self.destLng = destCoord["lng"].double!
-//                        println(self.destLat)
-//            })
-//        }
-//        geocoderTask.resume() // if block out this line, http request for geocoding won't get called
         
         /* Request routes from server: */
-        println("from outside:\(self.destLat)")
+        var coordArray = self.destString!.componentsSeparatedByString(",")
+        self.destLat = coordArray[0]
+        self.destLng = coordArray[1]
         
-        var encodeDest = "{\"lat\":\(self.destLat),\"lng\":\(self.destLng)}"
-        //var url : NSString = "http://173.236.254.243:8080/routes?dest="+encodeDest+"&start={\"lat\":33.777442,\"lng\":-84.397217}"
-
-        var url : NSString = "http://173.236.254.243:8080/routes?dest={\"lat\":33.772601,\"lng\":-84.394774}&start={\"lat\":33.777442,\"lng\":-84.397217}" // coc to tower
+        println("from outside"+self.destLat)
+        var encodeDest = "{\"lat\":"+self.destLat+",\"lng\":"+self.destLng+"}"
+//        var encodeStart = "{\"lat\":"+self.startLat+",\"lng\":"+self.startLng+"}"
+//        var encodeDest = "{\"lat\":\(self.destLat),\"lng\":\(self.destLng)}"
+        var url : NSString = "http://173.236.254.243:8080/routes?dest="+encodeDest+"&start={\"lat\":33.777442,\"lng\":-84.397217}"
+//        var url : NSString = "http://173.236.254.243:8080/routes?dest="+encodeDest+"&start="+encodeStart
+//        var url : NSString = "http://173.236.254.243:8080/routes?dest={\"lat\":33.772601,\"lng\":-84.394774}&start={\"lat\":33.777442,\"lng\":-84.397217}" // coc to tower
         var urlStr : NSString = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
         var queryURL : NSURL = NSURL(string: urlStr as String)!
 
@@ -357,46 +345,12 @@ class Routes: UIViewController, GMSMapViewDelegate {
         
     }
     
-    /* Get the JSON file from server: */
-    func getJSON(origin: String, destination: String, completionHandler: (String?, NSError?) -> Void ) -> NSURLSessionTask {
-        // do calculations origin and destiantion with google distance matrix api
-        
-        
-        var url : NSString = "http://173.236.254.243:8080/routes?dest={\"lat\":33.772601,\"lng\":-84.394774}&start={\"lat\":33.777442,\"lng\":-84.397217}" // coc to tower
-        var urlStr : NSString = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-        var queryURL : NSURL = NSURL(string: urlStr as String)!
-        let urlSession = NSURLSession.sharedSession()
-        
-        let task = urlSession.dataTaskWithURL(queryURL) { data, response, error -> Void in
-            if error != nil {
-                // If there is an error in the web request, print it to the console
-                // println(error.localizedDescription)
-                completionHandler(nil, error)
-                return
-            }
-            completionHandler(NSString(data: data, encoding: NSUTF8StringEncoding)! as String,nil)
-            
-            //println("parsing JSON");
-//            let json = JSON(data: data)
-//            if (json["status"].stringValue == "OK") {
-//                if let totalTime = json["rows"][0]["elements"][0]["duration"]["value"].integerValue {
-//                    // println(totalTime);
-//                    completionHandler(totalTime, nil)
-//                    return
-//                }
-//                let totalTimeError = NSError(domain: kAppDomain, code: kTotalTimeError, userInfo: nil) // populate this any way you prefer
-//                completionHandler(nil, totalTimeError)
-//            }
-//            let jsonError = NSError(domain: kAppDomain, code: kJsonError, userInfo: nil) // again, populate this as you prefer
-//            completionHandler(nil, jsonError)
-        }
-        task.resume()
-        return task
-    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "segue_route") {
             var svc = segue.destinationViewController as! navigation;
+            
+            svc.route_index = indexPicked.description
 //            svc.destString = inputDest.text
 //            println("inputdest:\(inputDest.text)")
         }
