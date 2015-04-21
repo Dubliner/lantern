@@ -95,9 +95,42 @@ class Initial: UIViewController, GMSMapViewDelegate {
                 
             })
         }
-        //
-        //
-        task.resume()
+        var url2 : NSString = "http://173.236.254.243:8080/heatmaps/negative?lat=33.777442&lng=-84.397217&radius=5000"
+        var queryURL2 : NSURL = NSURL(string: url2 as String)!
+            
+        let task2 = NSURLSession.sharedSession().dataTaskWithURL(queryURL2) {(data, response, error) in
+                
+            var myJSON = NSString(data: data, encoding: NSUTF8StringEncoding)
+
+                
+            /* Return to main thread so we can make call to Google Map SDK */
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                let json = JSON(data: data) // put data not the encoded one
+                    
+                    //                println(json)
+                let points : Array = json["response"].array!
+                    
+                for i in 0...points.count-1{
+                        //                    println(points[i])
+                    var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(points[i]["loc"]["coordinates"][1].double!, points[i]["loc"]["coordinates"][0].double!)
+                    var weight : Int
+                    weight = points[i]["weight"].int!
+                    var value: Int
+                        //  value = points[i]["value"].int!
+                        //                    println(pointcoord.latitude)
+                        //                    println(pointcoord.longitude)
+                        //                    println(weight)
+                        //println(value)
+                        
+                    var circ = GMSCircle(position: pointcoord, radius: 5)
+                    circ.fillColor = UIColor(red: 0, green: 0, blue: 0.8, alpha: 1)
+                    circ.strokeColor = UIColor.blueColor()
+                    circ.map = mapView;
+                    
+                }
+            });
+        };
+        task2.resume()
         
         
         
