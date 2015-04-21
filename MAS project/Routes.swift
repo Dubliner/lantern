@@ -43,9 +43,14 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
     var view_height = CGFloat(0)
     var label = UILabel()
     
+    var Pmap : Array<JSON>!
+    var Nmap : Array<JSON>!
+    
     struct toNavigation{
         var iPick : String
         var pPick : GMSMutablePath
+        var hPmap : Array<JSON>
+        var hNmap : Array<JSON>
     }
     
     func next_screen(sender: UIButton!) {
@@ -144,6 +149,9 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                         let routeIndex : Array = json["response"]["route_index"].array!
                         let routeposHeatmap : Array = json["response"]["heatmaps"]["positive"].array!
                         let routenegHeatmap : Array = json["response"]["heatmaps"]["negative"].array!
+                        
+                        self.Pmap = routeposHeatmap
+                        self.Nmap = routenegHeatmap
                         
                         //                                             Display heatmaps
                         for i in 0...routeposHeatmap.count-1{
@@ -388,7 +396,7 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
             NSLog("Index picked is")
             NSLog("%d", indexPicked)
 
-            var navigationWrapper = toNavigation(iPick: indexPicked, pPick: self.pathList[self.pathPicked])
+            var navigationWrapper = toNavigation(iPick: indexPicked, pPick: self.pathList[self.pathPicked], hPmap: self.Pmap, hNmap: self.Nmap)
             svc.fromRoutes = navigationWrapper
             //            svc.destString = inputDest.text
             //            println("inputdest:\(inputDest.text)")
