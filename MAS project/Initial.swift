@@ -33,7 +33,7 @@ class Initial: UIViewController, GMSMapViewDelegate {
         
         NSLog("Here we are");
         
-        var button1 = UIButton(frame: CGRectMake(30, view_height - 90, view_width - 60, 40));
+        var button1 = UIButton(frame: CGRectMake(25, view_height - 70, view_width - 90, 40));
 //        button1.center.x = view_width/2;
         button1.setTitle("  Where do you want to go?", forState: .Normal);
         button1.setTitleColor(UIColor.grayColor(), forState: .Normal);
@@ -42,7 +42,7 @@ class Initial: UIViewController, GMSMapViewDelegate {
         button1.backgroundColor = UIColor.whiteColor();
         button1.addTarget(self, action: Selector("next_screen:"), forControlEvents: UIControlEvents.TouchUpInside);
         
-        var search_button = UIButton(frame: CGRectMake(view_width - 70, view_height - 90, 40, 40));
+        var search_button = UIButton(frame: CGRectMake(view_width - 65, view_height - 70, 40, 40));
         search_button.setBackgroundImage(UIImage(named: "search_button.png"), forState: UIControlState.Normal);
         search_button.addTarget(self, action: Selector("next_screen:"), forControlEvents: UIControlEvents.TouchUpInside);
         
