@@ -517,9 +517,9 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
         
 //        if setRouteFlag == 0 {
         
-            var marker = GMSMarker()
-            marker.position = coord
-            marker.map = mapView
+//            var marker = GMSMarker()
+//            marker.position = coord
+//            marker.map = mapView
             
             taplat = coord.latitude
             taplng = coord.longitude
