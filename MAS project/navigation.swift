@@ -25,6 +25,8 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
     var locationManager : CLLocationManager!
     var locationObj = CLLocation();
     var route_index: String?
+    var view_width : CGFloat = 0.0
+    var view_height : CGFloat = 0.0
 
     func report(sender: UIButton!) {
         var alert = UIAlertController(title: "What would you like to report?", message: "", preferredStyle: UIAlertControllerStyle.Alert)
@@ -34,49 +36,55 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         
         let lightingAction = UIAlertAction(title: "Lighting", style: .Default, handler: {(action: UIAlertAction!) in
             NSLog("Reporting lighting");
+            var x_gap = CGFloat(50)
+            var box_width = self.view_width - 2 * x_gap
+            var box_height = CGFloat(100)
+            var label_height = CGFloat(40);
+            var inner_padding = CGFloat(10)
+            var upper_padding = CGFloat(10) + label_height
+            var star_size = (box_width - 2 * inner_padding) / 5
             
             self.lighting.backgroundColor = UIColor.whiteColor();
-            self.lighting.frame = CGRectMake(100, 180, 160, 80);
+            self.lighting.frame = CGRectMake(x_gap, 100.0, box_width, box_height);
         
-            var label = UILabel(frame: CGRectMake(0, 10, 160, 20))
+            var label = UILabel(frame: CGRectMake(0, 0, box_width, label_height))
             label.backgroundColor = UIColor.whiteColor();
             label.text = "Lighting";
         
-
             var one = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
-            one.frame = CGRectMake(10, 30, 30, 30);
+            one.frame = CGRectMake(inner_padding, upper_padding, star_size, star_size);
             one.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
             one.tag = 1;
             one.addTarget(self, action: Selector("report_lighting:"), forControlEvents: UIControlEvents.TouchUpInside);
             var two = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
-            two.frame = CGRectMake(40, 30, 30, 30);
+            two.frame = CGRectMake(inner_padding + star_size, upper_padding, star_size, star_size);
             two.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
             two.tag = 2;
             two.addTarget(self, action: Selector("report_lighting:"), forControlEvents: UIControlEvents.TouchUpInside);
             var three = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
-            three.frame = CGRectMake(70, 30, 30, 30);
+            three.frame = CGRectMake(inner_padding + 2 * star_size, upper_padding, star_size, star_size);
             three.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
             three.tag = 3;
             three.addTarget(self, action: Selector("report_lighting:"), forControlEvents: UIControlEvents.TouchUpInside);
             var four = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
-            four.frame = CGRectMake(100, 30, 30, 30);
+            four.frame = CGRectMake(inner_padding + 3 * star_size, upper_padding, star_size, star_size);
             four.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
             four.tag = 4;
             four.addTarget(self, action: Selector("report_lighting:"), forControlEvents: UIControlEvents.TouchUpInside);
             var five = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
-            five.frame = CGRectMake(130, 30, 30, 30);
+            five.frame = CGRectMake(inner_padding + 4 * star_size, upper_padding, star_size, star_size);
             five.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
             five.tag = 5;
             five.addTarget(self, action: Selector("report_lighting:"), forControlEvents: UIControlEvents.TouchUpInside);
 
-            var ok_button = UIButton(frame: CGRectMake(0, 60, 80, 20));
+            var ok_button = UIButton(frame: CGRectMake(0, upper_padding + star_size + 10, box_width/2, label_height));
             ok_button.setTitle("Ok", forState: .Normal);
             ok_button.setTitleColor(UIColor.blackColor(), forState: .Normal);
             ok_button.titleLabel!.textAlignment = .Center;
             ok_button.backgroundColor = UIColor.whiteColor();
             ok_button.addTarget(self, action: Selector("send_lighting_report:"), forControlEvents: UIControlEvents.TouchUpInside);
 
-            var cancel_button = UIButton(frame: CGRectMake(80, 60, 80, 20));
+            var cancel_button = UIButton(frame: CGRectMake(box_width/2, upper_padding + star_size + 10, box_width/2, label_height));
 
             cancel_button.setTitle("Cancel", forState: .Normal);
             cancel_button.setTitleColor(UIColor.blackColor(), forState: .Normal);
@@ -155,8 +163,8 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         super.viewDidLoad()
         NSLog(route_index!);
         
-        var view_width = self.view.frame.size.width;
-        var view_height = self.view.frame.size.height;
+        self.view_width = self.view.frame.size.width;
+        self.view_height = self.view.frame.size.height;
         
         self.locationManager = CLLocationManager()
         self.locationManager.delegate = self
