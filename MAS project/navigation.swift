@@ -24,6 +24,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
     var rating = UIView();
     let locationManager = CLLocationManager()
     var locationObj = CLLocation();
+    var route_index: String?
 
     func report(sender: UIButton!) {
         var alert = UIAlertController(title: "What would you like to report?", message: "", preferredStyle: UIAlertControllerStyle.Alert)
@@ -389,8 +390,10 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
     }
     
     func send_rating(sender: UIButton!) {
+        var value = 4*rating_stars - 10;
         // http://173.236.254.243:8080/routes/rate/1428192333326?rating=10&day=true
-        var url = "http://173.236.254.243:8080/heatmaps/"
+        var url = "http://173.236.254.243:8080/routes/rate/" + route_index! + "?rating=" + value.description + "&day=true"
+        NSLog(url);
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.HTTPMethod = "POST"
         //        let postString = ""
@@ -409,7 +412,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
             println("responseString = \(responseString)")
         }
         task.resume()
-        performSegueWithIdentifier("segue_end", sender: sender);
+//        performSegueWithIdentifier("segue_end", sender: sender);
     }
     
     func cancel_rating(sender: UIButton!) {
