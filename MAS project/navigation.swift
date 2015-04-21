@@ -27,38 +27,53 @@ class navigation: UIViewController, GMSMapViewDelegate {
             NSLog("here");
             var lighting = UIView();
             lighting.backgroundColor = UIColor.whiteColor();
-            lighting.frame = CGRectMake(100, 180, 190, 20);
+            lighting.frame = CGRectMake(100, 180, 160, 80);
         
-            var label = UILabel(frame: CGRectMake(0, 10, 70, 20))
+            var label = UILabel(frame: CGRectMake(0, 10, 160, 20))
             label.backgroundColor = UIColor.whiteColor();
             label.text = "Lighting";
         
 
             var one = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
-            one.frame = CGRectMake(80, 10, 20, 20);
+            one.frame = CGRectMake(10, 30, 30, 30);
             one.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
             one.tag = 1;
             one.addTarget(self, action: Selector("report_lighting:"), forControlEvents: UIControlEvents.TouchUpInside);
             var two = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
-            two.frame = CGRectMake(100, 10, 20, 20);
+            two.frame = CGRectMake(40, 30, 30, 30);
             two.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
             two.tag = 2;
             two.addTarget(self, action: Selector("report_lighting:"), forControlEvents: UIControlEvents.TouchUpInside);
             var three = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
-            three.frame = CGRectMake(120, 10, 20, 20);
+            three.frame = CGRectMake(70, 30, 30, 30);
             three.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
             three.tag = 3;
             three.addTarget(self, action: Selector("report_lighting:"), forControlEvents: UIControlEvents.TouchUpInside);
             var four = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
-            four.frame = CGRectMake(140, 10, 20, 20);
+            four.frame = CGRectMake(100, 30, 30, 30);
             four.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
             four.tag = 4;
             four.addTarget(self, action: Selector("report_lighting:"), forControlEvents: UIControlEvents.TouchUpInside);
             var five = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
-            five.frame = CGRectMake(160, 10, 20, 20);
+            five.frame = CGRectMake(130, 30, 30, 30);
             five.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
             five.tag = 5;
             five.addTarget(self, action: Selector("report_lighting:"), forControlEvents: UIControlEvents.TouchUpInside);
+
+            var ok_button = UIButton(frame: CGRectMake(0, 60, 80, 20));
+            ok_button.setTitle("Ok", forState: .Normal);
+            ok_button.setTitleColor(UIColor.blackColor(), forState: .Normal);;
+            ok_button.titleLabel!.textAlignment = .Center;
+            ok_button.backgroundColor = UIColor.whiteColor();
+            ok_button.addTarget(self, action: Selector("send_lighting_report:"), forControlEvents: UIControlEvents.TouchUpInside);
+
+            var cancel_button = UIButton(frame: CGRectMake(80, 60, 80, 20));
+
+            cancel_button.setTitle("Cancel", forState: .Normal);
+            cancel_button.setTitleColor(UIColor.blackColor(), forState: .Normal);
+            cancel_button.titleLabel!.textAlignment = .Center;
+            cancel_button.backgroundColor = UIColor.whiteColor();
+            cancel_button.addTarget(self, action: Selector("close_report_lighting:"), forControlEvents: UIControlEvents.TouchUpInside);
         
             self.report_buttons.append(one);
             self.report_buttons.append(two);
@@ -72,6 +87,8 @@ class navigation: UIViewController, GMSMapViewDelegate {
             lighting.addSubview(three);
             lighting.addSubview(four);
             lighting.addSubview(five);
+            lighting.addSubview(ok_button);
+            lighting.addSubview(cancel_button);
         
             self.view.addSubview(lighting);
             
