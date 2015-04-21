@@ -175,8 +175,6 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         var mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
         mapView.camera = camera
         mapView.myLocationEnabled = true
-//        mapView.settings.compassButton = true
-//        mapView.settings.myLocationButton = true
         self.view = mapView
         
         /* Render Route: */
@@ -502,9 +500,6 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
             var locationArray = locations as NSArray
             self.locationObj = locationArray.lastObject as! CLLocation
         var point = locationObj.coordinate;
-//        NSLog("Location:");
-//        NSLog(point.latitude.description);
-//        NSLog(manager.location.description);
     }
     
     func hexStringToUIColor (hex:String) -> UIColor {

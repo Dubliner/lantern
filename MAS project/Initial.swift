@@ -26,7 +26,7 @@ class Initial: UIViewController, GMSMapViewDelegate {
         mapView.camera = camera
         mapView.myLocationEnabled = true
         mapView.settings.compassButton = true
-//        mapView.settings.myLocationButton = true
+
         self.view = mapView
         
         var label = UILabel(frame: CGRectMake(25, view_height - 120, view_width - 50, 40))
@@ -36,11 +36,10 @@ class Initial: UIViewController, GMSMapViewDelegate {
         label.textColor = UIColor.whiteColor();
         
         var button1 = UIButton(frame: CGRectMake(25, view_height - 70, view_width - 90, 40));
-//        button1.center.x = view_width/2;
+
         button1.setTitle("  Where do you want to go?", forState: .Normal);
         button1.setTitleColor(UIColor.grayColor(), forState: .Normal);
         button1.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left;
-//        button1.titleLabel!.textAlignment = UITextAlignmentLeft;-
         button1.backgroundColor = UIColor.whiteColor();
         button1.addTarget(self, action: Selector("next_screen:"), forControlEvents: UIControlEvents.TouchUpInside);
         
@@ -62,11 +61,7 @@ class Initial: UIViewController, GMSMapViewDelegate {
             
             /* Return to main thread so we can make call to Google Map SDK */
             dispatch_sync(dispatch_get_main_queue(), { () -> Void in
-                //                var marker = GMSMarker()
-                //                marker.position = CLLocationCoordinate2DMake(33.777442, -84.397217)
-                //                marker.title = "Sydney"
-                //                marker.snippet = "Australia"
-                //                marker.map = mapView
+
                 var seeif = 1
                 let json = JSON(data: data) // put data not the encoded one
                 
@@ -78,12 +73,6 @@ class Initial: UIViewController, GMSMapViewDelegate {
                     var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(points[i]["loc"]["coordinates"][1].double!, points[i]["loc"]["coordinates"][0].double!)
                     var weight : Int
                     weight = points[i]["weight"].int!
-//                    var value: Int
-                    //  value = points[i]["value"].int!
-                    //                    println(pointcoord.latitude)
-                    //                    println(pointcoord.longitude)
-                    //                    println(weight)
-                    //println(value)
                     
                     var circ = GMSCircle(position: pointcoord, radius: 5)
                     circ.fillColor = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
@@ -114,11 +103,6 @@ class Initial: UIViewController, GMSMapViewDelegate {
                     var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(points[i]["loc"]["coordinates"][1].double!, points[i]["loc"]["coordinates"][0].double!)
                     var weight : Float
                     weight = points[i]["weight"].float!
-//                    println(weight)
-//                    var value: Float
-//                    value = points[i]["value"].float!
-//                    println(value)
-//                    var color = UIColor(red: <#CGFloat#>, green: <#CGFloat#>, blue: <#CGFloat#>, alpha: <#CGFloat#>)
                     var circ = GMSCircle(position: pointcoord, radius: 5)
                     circ.fillColor = self.hexStringToUIColor("#6495ED")
                     circ.strokeColor = self.hexStringToUIColor("#6495ED")
