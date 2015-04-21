@@ -176,8 +176,15 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                         
                         for i in 0...routesList.count-1{
                             self.scores.append(routeScore[i].int!)
-                            self.indices.append(routeIndex[i].string!)
+                            if let route_id = routeIndex[i].number {
+//                                self.indices.append(routeIndex[i].string!)
+                                self.indices.append(route_id.description);
+                            }
+                            else {
+                                println(routeIndex[i]);
+                            }
                         }
+                        //1429633948775
                         NSLog("reached here");
                         self.routes = Array<Array<CLLocationCoordinate2D>>()
                         
