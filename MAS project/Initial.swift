@@ -63,7 +63,7 @@ class Initial: UIViewController, GMSMapViewDelegate {
             //            println(myJSON)
             
             /* Return to main thread so we can make call to Google Map SDK */
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
                 //                var marker = GMSMarker()
                 //                marker.position = CLLocationCoordinate2DMake(33.777442, -84.397217)
                 //                marker.title = "Sydney"
@@ -95,6 +95,7 @@ class Initial: UIViewController, GMSMapViewDelegate {
                 
             })
         }
+        task.resume()
         var url2 : NSString = "http://173.236.254.243:8080/heatmaps/negative?lat=33.777442&lng=-84.397217&radius=5000"
         var queryURL2 : NSURL = NSURL(string: url2 as String)!
             
@@ -123,8 +124,8 @@ class Initial: UIViewController, GMSMapViewDelegate {
                         //println(value)
                         
                     var circ = GMSCircle(position: pointcoord, radius: 5)
-                    circ.fillColor = UIColor(red: 0, green: 0, blue: 0.8, alpha: 1)
-                    circ.strokeColor = UIColor.blueColor()
+                    circ.fillColor = self.hexStringToUIColor("#6495ED")
+                    circ.strokeColor = self.hexStringToUIColor("#6495ED")
                     circ.map = mapView;
                     
                 }
