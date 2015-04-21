@@ -32,6 +32,8 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
     var view_height : CGFloat = 0.0
 
     func report(sender: UIButton!) {
+        lighting.removeFromSuperview()
+        rating.removeFromSuperview()
         var alert = UIAlertController(title: "What would you like to report?", message: "", preferredStyle: UIAlertControllerStyle.Alert)
         
         let lightingAction = UIAlertAction(title: "Lighting", style: .Default, handler: {(action: UIAlertAction!) in
@@ -46,10 +48,15 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
             
             self.lighting.backgroundColor = UIColor.whiteColor();
             self.lighting.frame = CGRectMake(x_gap, 100.0, box_width, box_height);
+            self.lighting.layer.cornerRadius = 10;
+            self.lighting.layer.masksToBounds = true;
+
         
             var label = UILabel(frame: CGRectMake(0, 0, box_width, label_height))
-            label.backgroundColor = UIColor.whiteColor();
+            label.backgroundColor = self.hexStringToUIColor("#5a5399");
             label.text = "Lighting";
+            label.textColor = UIColor.whiteColor()
+            label.textAlignment = .Center
         
             var one = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
             one.frame = CGRectMake(inner_padding, upper_padding, star_size, star_size);
@@ -119,8 +126,6 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
             var url = "http://173.236.254.243:8080/heatmaps/?lat=" + lat.description + "&lng=" + long.description + "&type=police_tower&value=10";
             let request = NSMutableURLRequest(URL: NSURL(string: url)!)
             request.HTTPMethod = "POST"
-            //        let postString = ""
-            //        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
             let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
                 data, response, error in
                 
@@ -292,6 +297,8 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
     }
     
     func end_navigation(sender: UIButton!) {
+        
+        lighting.removeFromSuperview()
         
         self.rating.backgroundColor = UIColor.whiteColor();
         self.rating.frame = CGRectMake(100, 180, 160, 80);
