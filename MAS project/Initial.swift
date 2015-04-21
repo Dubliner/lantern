@@ -21,7 +21,7 @@ class Initial: UIViewController, GMSMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 15)
         var mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
         mapView.camera = camera
@@ -31,10 +31,10 @@ class Initial: UIViewController, GMSMapViewDelegate {
         self.view = mapView
         
         NSLog("Here we are");
-//        var X_Co = self.view.frame.size.width - 100;
-//        var Y_Co = self.view.frame.size.height - 40;
+        //        var X_Co = self.view.frame.size.width - 100;
+        //        var Y_Co = self.view.frame.size.height - 40;
         var button1 = UIButton(frame: CGRectMake(30, 550, 300, 40));
-//        button1.center.x = self.view.frame.size.width/2;
+        //        button1.center.x = self.view.frame.size.width/2;
         button1.setTitle("Where do you want to go?", forState: .Normal);
         button1.setTitleColor(UIColor.blackColor(), forState: .Normal);
         button1.titleLabel!.textAlignment = .Center;
@@ -42,38 +42,38 @@ class Initial: UIViewController, GMSMapViewDelegate {
         button1.addTarget(self, action: Selector("next_screen:"), forControlEvents: UIControlEvents.TouchUpInside);
         
         self.view.addSubview(button1);
-
+        
         var url : NSString = "http://173.236.254.243:8080/heatmaps/positive?lat=33.777442&lng=-84.397217&radius=5000"
         var queryURL : NSURL = NSURL(string: url as String)!
         
         let task = NSURLSession.sharedSession().dataTaskWithURL(queryURL) {(data, response, error) in
             
             var myJSON = NSString(data: data, encoding: NSUTF8StringEncoding)
-//            println(myJSON)
+            //            println(myJSON)
             
             /* Return to main thread so we can make call to Google Map SDK */
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                var marker = GMSMarker()
-//                marker.position = CLLocationCoordinate2DMake(33.777442, -84.397217)
-//                marker.title = "Sydney"
-//                marker.snippet = "Australia"
-//                marker.map = mapView
+                //                var marker = GMSMarker()
+                //                marker.position = CLLocationCoordinate2DMake(33.777442, -84.397217)
+                //                marker.title = "Sydney"
+                //                marker.snippet = "Australia"
+                //                marker.map = mapView
                 var seeif = 1
                 let json = JSON(data: data) // put data not the encoded one
                 
-                println(json)
+                //                println(json)
                 let points : Array = json["response"].array!
                 
                 for i in 0...points.count-1{
-                    println(points[i])
+                    //                    println(points[i])
                     var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(points[i]["loc"]["coordinates"][1].double!, points[i]["loc"]["coordinates"][0].double!)
                     var weight : Int
                     weight = points[i]["weight"].int!
                     var value: Int
-                  //  value = points[i]["value"].int!
-                    println(pointcoord.latitude)
-                    println(pointcoord.longitude)
-                    println(weight)
+                    //  value = points[i]["value"].int!
+                    //                    println(pointcoord.latitude)
+                    //                    println(pointcoord.longitude)
+                    //                    println(weight)
                     //println(value)
                     
                     var circ = GMSCircle(position: pointcoord, radius: 5)
@@ -84,13 +84,13 @@ class Initial: UIViewController, GMSMapViewDelegate {
                 
             })
         }
-        //    
-        //        
+        //
+        //
         task.resume()
         
-
-            
-
+        
+        
+        
     }
     
     
