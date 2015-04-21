@@ -535,12 +535,13 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
             var bestInd : Int = 0
             var bestScore : Int = Int.min
             for i in 0...self.scores.count-1{
+                println(self.scores[i])
                 if self.scores[i]>bestScore{
                     bestScore = self.scores[i]
                     bestInd = i
                 }
                 var currPath : GMSPath = self.pathList[i]
-                if GMSGeometryIsLocationOnPathTolerance(coord, currPath, false, CLLocationDistance(2.0)){
+                if GMSGeometryIsLocationOnPathTolerance(coord, currPath, false, CLLocationDistance(10.0)){
                     candidates.append(i)
                     if self.scores[i]>bestCandidateScore{
                         bestCandidateScore = self.scores[i]
