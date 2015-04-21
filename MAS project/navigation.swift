@@ -18,6 +18,8 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
     var fromRoutes : Routes.toNavigation!
     
     var myPath : GMSMutablePath!
+    var positive_heatmap : Array<JSON> = []
+    var negative_heatmap : Array<JSON> = []
     
     var report_buttons: Array<UIButton> = [];
     var rating_buttons: Array<UIButton> = [];
@@ -153,6 +155,8 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
     override func viewDidLoad() {
         self.route_index = self.fromRoutes.iPick
         self.myPath = self.fromRoutes.pPick
+        self.positive_heatmap = self.fromRoutes.hPmap
+        self.negative_heatmap = self.fromRoutes.hNmap
         super.viewDidLoad()
         NSLog(route_index!);
         println(self.myPath.description)
@@ -181,6 +185,29 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         polyline.spans = [GMSStyleSpan(color: polycolor)]
         polyline.strokeWidth = CGFloat(6.0)
         polyline.map = mapView
+        
+        // Render positive heatmap
+        for i in 0...positive_heatmap.count-1{
+            var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(positive_heatmap[i]["loc"]["coordinates"][1].double!, positive_heatmap[i]["loc"]["coordinates"][0].double!)
+            var weight : Int
+            weight = positive_heatmap[i]["weight"].int!
+            
+            var circ = GMSCircle(position: pointcoord, radius: 5)
+            circ.fillColor = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
+            circ.strokeColor = UIColor.redColor()
+            circ.map = mapView;
+        }
+        
+        // Render negative heatmap
+        for i in 0...negative_heatmap.count-1{
+            var pointcoord : CLLocationCoordinate2D = CLLocationCoordinate2DMake(negative_heatmap[i]["loc"]["coordinates"][1].double!, negative_heatmap[i]["loc"]["coordinates"][0].double!)
+            var weight : Int
+            weight = negative_heatmap[i]["weight"].int!
+            var circ = GMSCircle(position: pointcoord, radius: 5)
+            circ.fillColor = self.hexStringToUIColor("#6495ED")
+            circ.strokeColor = self.hexStringToUIColor("#6495ED")
+            circ.map = mapView;
+        }
         
         NSLog("Here we are");
         var button1 = UIButton(frame: CGRectMake(25, view_height - 60, view_width/2 - 35, 40));
