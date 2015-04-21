@@ -15,6 +15,8 @@ import CoreLocation
 
 
 class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate {
+    var fromRoutes : Routes.toNavigation!
+    
     var myPath : GMSMutablePath!
     
     var report_buttons: Array<UIButton> = [];
@@ -161,6 +163,8 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
   
 
     override func viewDidLoad() {
+        self.route_index = self.fromRoutes.iPick
+        self.myPath = self.fromRoutes.pPick
         super.viewDidLoad()
         NSLog(route_index!);
         println(self.myPath.description)
@@ -182,6 +186,13 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         mapView.settings.compassButton = true
         mapView.settings.myLocationButton = true
         self.view = mapView
+        
+        /* Render Route: */
+        let polycolor = UIColor.greenColor()
+        var polyline = GMSPolyline(path : self.myPath)
+        polyline.spans = [GMSStyleSpan(color: polycolor)]
+        polyline.strokeWidth = CGFloat(6.0)
+        polyline.map = mapView
         
         NSLog("Here we are");
         //        var X_Co = self.view.frame.size.width - 100;

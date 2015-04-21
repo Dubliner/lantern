@@ -10,7 +10,10 @@ import UIKit
 import MapKit
 
 class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ // last get current location
-    
+    struct toNavigation{
+        var iPick : String
+        var pPick : GMSMutablePath
+    }
     //    struct myvar {
     //        var t : Int = 1
     //    }
@@ -641,11 +644,14 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "segue_route") {
             var svc = segue.destinationViewController as! navigation;
-            var svc2 = segue.destinationViewController as! navigation;
-            svc2.myPath = self.pathList[self.pathPicked]
-            NSLog("Index picked is")
-            NSLog("%d", indexPicked)
-            svc.route_index = indexPicked;
+            var navigationWrapper = toNavigation(iPick: indexPicked, pPick: self.pathList[self.pathPicked])
+            svc.fromRoutes = navigationWrapper
+//            var svc = segue.destinationViewController as! navigation;
+//            var svc2 = segue.destinationViewController as! navigation;
+//            svc2.myPath = self.pathList[self.pathPicked]
+//            NSLog("Index picked is")
+//            NSLog("%d", indexPicked)
+//            svc.route_index = indexPicked;
             //            svc.destString = inputDest.text
             //            println("inputdest:\(inputDest.text)")
         }
