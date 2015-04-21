@@ -47,7 +47,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
             var box_height = CGFloat(100) + star_size;
             
             self.lighting.backgroundColor = UIColor.whiteColor();
-            self.lighting.frame = CGRectMake(x_gap, 100.0, box_width, box_height);
+            self.lighting.frame = CGRectMake(x_gap, 120.0, box_width, box_height);
             self.lighting.layer.cornerRadius = 10;
             self.lighting.layer.masksToBounds = true;
 
@@ -263,7 +263,6 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         lighting.removeFromSuperview();
         NSLog("sending lighting report");
         var value = 4*lighting_stars - 10;
-//        var coord = locationManager.location.coordinate
         var coord = locationObj.coordinate
         var lat = coord.latitude
         var long = coord.longitude
@@ -271,8 +270,6 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         var url = "http://173.236.254.243:8080/heatmaps/?lat=" + lat.description + "&lng=" + long.description + "&type=lighting&value=" + value.description;
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.HTTPMethod = "POST"
-//        let postString = ""
-//        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
             data, response, error in
             
@@ -300,48 +297,64 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         
         lighting.removeFromSuperview()
         
+        var x_gap = CGFloat(50)
+        var box_width = self.view_width - 2 * x_gap
+        var label_height = CGFloat(40);
+        var inner_padding = CGFloat(10)
+        var upper_padding = CGFloat(10) + label_height
+        var star_size = (box_width - 2 * inner_padding) / 5
+        var box_height = CGFloat(100) + star_size;
+        
         self.rating.backgroundColor = UIColor.whiteColor();
-        self.rating.frame = CGRectMake(100, 180, 160, 80);
+        self.rating.frame = CGRectMake(x_gap, 120.0, box_width, box_height);
+        self.rating.layer.cornerRadius = 10;
+        self.rating.layer.masksToBounds = true;
         
-        var label = UILabel(frame: CGRectMake(0, 10, 160, 20))
-        label.backgroundColor = UIColor.whiteColor();
+        var label = UILabel(frame: CGRectMake(0, 0, box_width, label_height))
+        label.backgroundColor = self.hexStringToUIColor("#5a5399");
         label.text = "Please rate the route";
-        
-        
+        label.textColor = UIColor.whiteColor()
+        label.textAlignment = .Center
+
+        NSLog(star_size.description)
         var one = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
-        one.frame = CGRectMake(10, 30, 30, 30);
+        one.frame = CGRectMake(inner_padding, upper_padding, star_size, star_size);
         one.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
         one.tag = 1;
         one.addTarget(self, action: Selector("set_rating:"), forControlEvents: UIControlEvents.TouchUpInside);
         var two = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
-        two.frame = CGRectMake(40, 30, 30, 30);
+        two.frame = CGRectMake(inner_padding + star_size, upper_padding, star_size, star_size);
         two.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
         two.tag = 2;
         two.addTarget(self, action: Selector("set_rating:"), forControlEvents: UIControlEvents.TouchUpInside);
+        
+        NSLog(star_size.description)
+        NSLog((inner_padding + star_size).description)
+        NSLog((inner_padding + 2 * star_size).description)
         var three = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
-        three.frame = CGRectMake(70, 30, 30, 30);
+        three.frame = CGRectMake(inner_padding + 2 * star_size, upper_padding, star_size, star_size);
         three.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
         three.tag = 3;
         three.addTarget(self, action: Selector("set_rating:"), forControlEvents: UIControlEvents.TouchUpInside);
         var four = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
-        four.frame = CGRectMake(100, 30, 30, 30);
+        four.frame = CGRectMake(inner_padding + 3 * star_size, upper_padding, star_size, star_size);
         four.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
         four.tag = 4;
         four.addTarget(self, action: Selector("set_rating:"), forControlEvents: UIControlEvents.TouchUpInside);
         var five = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton;
-        five.frame = CGRectMake(130, 30, 30, 30);
+        five.frame = CGRectMake(inner_padding + 4 * star_size, upper_padding, star_size, star_size);
         five.setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
         five.tag = 5;
         five.addTarget(self, action: Selector("set_rating:"), forControlEvents: UIControlEvents.TouchUpInside);
         
-        var ok_button = UIButton(frame: CGRectMake(0, 60, 80, 20));
+        var ok_button = UIButton(frame: CGRectMake(0, upper_padding + star_size + 10, box_width/2, label_height));
         ok_button.setTitle("Ok", forState: .Normal);
         ok_button.setTitleColor(UIColor.blackColor(), forState: .Normal);
         ok_button.titleLabel!.textAlignment = .Center;
         ok_button.backgroundColor = UIColor.whiteColor();
         ok_button.addTarget(self, action: Selector("send_rating:"), forControlEvents: UIControlEvents.TouchUpInside);
         
-        var cancel_button = UIButton(frame: CGRectMake(80, 60, 80, 20));
+        var cancel_button = UIButton(frame: CGRectMake(box_width/2, upper_padding + star_size + 10, box_width/2, label_height));
         
         cancel_button.setTitle("Cancel", forState: .Normal);
         cancel_button.setTitleColor(UIColor.blackColor(), forState: .Normal);
@@ -430,8 +443,6 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         NSLog(url);
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.HTTPMethod = "POST"
-        //        let postString = ""
-        //        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
             data, response, error in
             
