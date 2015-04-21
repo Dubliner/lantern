@@ -16,6 +16,8 @@ import Foundation
 class navigation: UIViewController, GMSMapViewDelegate {
     
     var report_buttons: Array<UIButton> = [];
+    var lighting_stars = 0;
+    var lighting = UIView();
 
     func report(sender: UIButton!) {
         var alert = UIAlertController(title: "What would you like to report?", message: "", preferredStyle: UIAlertControllerStyle.Alert)
@@ -25,9 +27,9 @@ class navigation: UIViewController, GMSMapViewDelegate {
         
         let lightingAction = UIAlertAction(title: "Lighting", style: .Default, handler: {(action: UIAlertAction!) in
             NSLog("here");
-            var lighting = UIView();
-            lighting.backgroundColor = UIColor.whiteColor();
-            lighting.frame = CGRectMake(100, 180, 160, 80);
+            
+            self.lighting.backgroundColor = UIColor.whiteColor();
+            self.lighting.frame = CGRectMake(100, 180, 160, 80);
         
             var label = UILabel(frame: CGRectMake(0, 10, 160, 20))
             label.backgroundColor = UIColor.whiteColor();
@@ -62,7 +64,7 @@ class navigation: UIViewController, GMSMapViewDelegate {
 
             var ok_button = UIButton(frame: CGRectMake(0, 60, 80, 20));
             ok_button.setTitle("Ok", forState: .Normal);
-            ok_button.setTitleColor(UIColor.blackColor(), forState: .Normal);;
+            ok_button.setTitleColor(UIColor.blackColor(), forState: .Normal);
             ok_button.titleLabel!.textAlignment = .Center;
             ok_button.backgroundColor = UIColor.whiteColor();
             ok_button.addTarget(self, action: Selector("send_lighting_report:"), forControlEvents: UIControlEvents.TouchUpInside);
@@ -75,22 +77,23 @@ class navigation: UIViewController, GMSMapViewDelegate {
             cancel_button.backgroundColor = UIColor.whiteColor();
             cancel_button.addTarget(self, action: Selector("close_report_lighting:"), forControlEvents: UIControlEvents.TouchUpInside);
         
+            self.report_buttons = [];
             self.report_buttons.append(one);
             self.report_buttons.append(two);
             self.report_buttons.append(three);
             self.report_buttons.append(four);
             self.report_buttons.append(five);
 
-            lighting.addSubview(label);
-            lighting.addSubview(one);
-            lighting.addSubview(two);
-            lighting.addSubview(three);
-            lighting.addSubview(four);
-            lighting.addSubview(five);
-            lighting.addSubview(ok_button);
-            lighting.addSubview(cancel_button);
+            self.lighting.addSubview(label);
+            self.lighting.addSubview(one);
+            self.lighting.addSubview(two);
+            self.lighting.addSubview(three);
+            self.lighting.addSubview(four);
+            self.lighting.addSubview(five);
+            self.lighting.addSubview(ok_button);
+            self.lighting.addSubview(cancel_button);
         
-            self.view.addSubview(lighting);
+            self.view.addSubview(self.lighting);
             
         });
         let policeAction = UIAlertAction(title: "Police Presence", style: .Default) { (_) in }
@@ -158,7 +161,68 @@ class navigation: UIViewController, GMSMapViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-//    func report_lighting(sender: UIButton!) {
-//    }
+    func report_lighting(sender: UIButton!) {
+        if(sender.tag == 1)
+        {
+            NSLog("1 star");
+            report_buttons[0].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
+            report_buttons[1].setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
+            report_buttons[2].setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
+            report_buttons[3].setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
+            report_buttons[4].setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
+            lighting_stars = 1;
+        }
+        else if(sender.tag == 2)
+        {
+            NSLog("2 stars");
+            report_buttons[0].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
+            report_buttons[1].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
+            report_buttons[2].setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
+            report_buttons[3].setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
+            report_buttons[4].setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
+            lighting_stars = 2;
+        }
+        if(sender.tag == 3)
+        {
+            NSLog("3 stars");
+            report_buttons[0].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
+            report_buttons[1].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
+            report_buttons[2].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
+            report_buttons[3].setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
+            report_buttons[4].setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
+            lighting_stars = 3;
+        }
+        if(sender.tag == 4)
+        {
+            NSLog("4 stars");
+            report_buttons[0].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
+            report_buttons[1].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
+            report_buttons[2].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
+            report_buttons[3].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
+            report_buttons[4].setBackgroundImage(UIImage(named: "unselected.png"), forState: UIControlState.Normal);
+            lighting_stars = 4;
+        }
+        if(sender.tag == 5)
+        {
+            NSLog("5 stars");
+            report_buttons[0].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
+            report_buttons[1].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
+            report_buttons[2].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
+            report_buttons[3].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
+            report_buttons[4].setBackgroundImage(UIImage(named: "selected.png"), forState: UIControlState.Normal);
+            lighting_stars = 5;
+        }
+    }
+    
+    func send_lighting_report(sender: UIButton!) {
+        lighting.removeFromSuperview();
+        NSLog("sending lighting report");
+    }
+    
+    func close_report_lighting(sender: UIButton) {
+        lighting.removeFromSuperview();
+        lighting_stars = 0;
+        NSLog("cancelled lighting report");
+    }
 
 }

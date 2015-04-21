@@ -35,15 +35,15 @@ class Initial: UIViewController, GMSMapViewDelegate {
 //        var Y_Co = self.view.frame.size.height - 40;
         var button1 = UIButton(frame: CGRectMake(30, 550, 300, 40));
 //        button1.center.x = self.view.frame.size.width/2;
-        button1.titleLabel!.text = "Where do you want to go?";
-        button1.titleLabel!.textColor = UIColor.blackColor();
+        button1.setTitle("Where do you want to go?", forState: .Normal);
+        button1.setTitleColor(UIColor.blackColor(), forState: .Normal);
         button1.titleLabel!.textAlignment = .Center;
         button1.backgroundColor = UIColor.whiteColor();
         button1.addTarget(self, action: Selector("next_screen:"), forControlEvents: UIControlEvents.TouchUpInside);
         
         self.view.addSubview(button1);
 
-        var url : NSString = "http://173.236.254.243:8080/heatmaps/positive?lat=33.777442&lng=-84.397217&radius=2500&total=2"
+        var url : NSString = "http://173.236.254.243:8080/heatmaps/positive?lat=33.777442&lng=-84.397217&radius=5000"
         var queryURL : NSURL = NSURL(string: url as String)!
         
         let task = NSURLSession.sharedSession().dataTaskWithURL(queryURL) {(data, response, error) in
@@ -53,11 +53,11 @@ class Initial: UIViewController, GMSMapViewDelegate {
             
             /* Return to main thread so we can make call to Google Map SDK */
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                var marker = GMSMarker()
-                marker.position = CLLocationCoordinate2DMake(33.777442, -84.397217)
-                marker.title = "Sydney"
-                marker.snippet = "Australia"
-                marker.map = mapView
+//                var marker = GMSMarker()
+//                marker.position = CLLocationCoordinate2DMake(33.777442, -84.397217)
+//                marker.title = "Sydney"
+//                marker.snippet = "Australia"
+//                marker.map = mapView
                 var seeif = 1
                 let json = JSON(data: data) // put data not the encoded one
                 
