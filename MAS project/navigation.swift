@@ -33,7 +33,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         
         
         let lightingAction = UIAlertAction(title: "Lighting", style: .Default, handler: {(action: UIAlertAction!) in
-            NSLog("here");
+            NSLog("Reporting lighting");
             
             self.lighting.backgroundColor = UIColor.whiteColor();
             self.lighting.frame = CGRectMake(100, 180, 160, 80);
@@ -103,7 +103,31 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
             self.view.addSubview(self.lighting);
             
         });
-        let policeAction = UIAlertAction(title: "Police Presence", style: .Default) { (_) in }
+        let policeAction = UIAlertAction(title: "Police Presence", style: .Default, handler: {(action: UIAlertAction!) in
+            NSLog("report police presence");
+            var coord = self.locationObj.coordinate
+            var lat = coord.latitude
+            var long = coord.longitude
+            var url = "http://173.236.254.243:8080/heatmaps/?lat=" + lat.description + "&lng=" + long.description + "&type=police_tower&value=10";
+            let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+            request.HTTPMethod = "POST"
+            //        let postString = ""
+            //        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+                data, response, error in
+                
+                if error != nil {
+                    println("error=\(error)")
+                    return
+                }
+                
+                println("response = \(response)")
+                
+                let responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
+                println("responseString = \(responseString)")
+            }
+            task.resume()
+        });
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (_) in }
         alert.addAction(lightingAction)
         alert.addAction(policeAction)
@@ -129,6 +153,10 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NSLog(route_index!);
+        
+        var view_width = self.view.frame.size.width;
+        var view_height = self.view.frame.size.height;
         
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -146,25 +174,25 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         NSLog("Here we are");
         //        var X_Co = self.view.frame.size.width - 100;
         //        var Y_Co = self.view.frame.size.height - 40;
-        var button1 = UIButton(frame: CGRectMake(30, 550, 150, 40));
+        var button1 = UIButton(frame: CGRectMake(25, view_height - 60, view_width/2 - 35, 40));
         //        button1.center.x = self.view.frame.size.width/2;
 //        button1.titleLabel!.text = "Report";
 //        button1.titleLabel!.textColor = UIColor.blackColor();
         button1.setTitle("Report", forState: .Normal);
-        button1.setTitleColor(UIColor.blackColor(), forState: .Normal);
+        button1.setTitleColor(UIColor.whiteColor(), forState: .Normal);
         button1.titleLabel!.textAlignment = .Center;
-        button1.backgroundColor = UIColor.whiteColor();
+        button1.backgroundColor = hexStringToUIColor("#f62afd");
         button1.addTarget(self, action: Selector("report:"), forControlEvents: UIControlEvents.TouchUpInside);
         
         self.view.addSubview(button1);
-        var button2 = UIButton(frame: CGRectMake(200, 550, 150, 40));
+        var button2 = UIButton(frame: CGRectMake(view_width/2 + 10, view_height - 60, view_width/2 - 35, 40));
         //        button1.center.x = self.view.frame.size.width/2;
 //        button2.titleLabel!.text = "End";
 //        button2.titleLabel!.textColor = UIColor.blackColor();
         button2.setTitle("End", forState: .Normal);
-        button2.setTitleColor(UIColor.blackColor(), forState: .Normal);
+        button2.setTitleColor(UIColor.whiteColor(), forState: .Normal);
         button2.titleLabel!.textAlignment = .Center;
-        button2.backgroundColor = UIColor.whiteColor();
+        button2.backgroundColor = hexStringToUIColor("#5a5399");
         button2.addTarget(self, action: Selector("end_navigation:"), forControlEvents: UIControlEvents.TouchUpInside);
         
         self.view.addSubview(button2);
@@ -256,6 +284,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
             println("responseString = \(responseString)")
         }
         task.resume()
+        lighting_stars = 0;
     }
     
     func close_report_lighting(sender: UIButton) {
@@ -412,7 +441,8 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
             println("responseString = \(responseString)")
         }
         task.resume()
-//        performSegueWithIdentifier("segue_end", sender: sender);
+        rating_stars = 0;
+        performSegueWithIdentifier("segue_end", sender: sender);
     }
     
     func cancel_rating(sender: UIButton!) {
@@ -431,6 +461,28 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         NSLog("Location:");
         NSLog(point.latitude.description);
         NSLog(manager.location.description);
+    }
+    
+    func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet() as NSCharacterSet).uppercaseString
+        
+        if (cString.hasPrefix("#")) {
+            cString = cString.substringFromIndex(advance(cString.startIndex, 1))
+        }
+        
+        if (count(cString) != 6) {
+            return UIColor.grayColor()
+        }
+        
+        var rgbValue:UInt32 = 0
+        NSScanner(string: cString).scanHexInt(&rgbValue)
+        
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
     }
 
 }

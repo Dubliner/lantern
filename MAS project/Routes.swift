@@ -33,14 +33,14 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
     var setRouteFlag = 0
     var routes = Array<Array<CLLocationCoordinate2D>>()
     var scores = Array<Int>()
-    var indices = Array<Int>()
+    var indices = Array<String>()
     var pathList : Array<GMSMutablePath> = Array<GMSMutablePath>()
     var pathPicked : Int = 0
-    var indexPicked : Int = 0
+    var indexPicked : String = "0"
     
     func next_screen(sender: UIButton!) {
         var url = "http://173.236.254.243:8080/routes/select/";
-        url += indexPicked.description;
+        url += indexPicked;
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.HTTPMethod = "POST"
         //        let postString = "routes/select/1425850320099"
@@ -122,8 +122,8 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                 self.startLat = startArr[0]
                 self.startLng = startArr[1]
                 self.startMutex = false
-                println("in location dest got:"+self.destString!)
-                println("in start got:"+self.startLatLng)
+//                println("in location dest got:"+self.destString!)
+//                println("in start got:"+self.startLatLng)
                 /* Request routes from server: */
                 //            var coordArray = self.destString!.componentsSeparatedByString(",")
                 //            self.destLat = coordArray[0]
@@ -162,22 +162,23 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                             weight = routeposHeatmap[i]["weight"].int!
                             //                    var value: Int
                             //                    value = routeposHeatmap[i]["value"].int!
-                            println(pointcoord.latitude)
-                            println(pointcoord.longitude)
-                            println(weight)
+//                            println(pointcoord.latitude)
+//                            println(pointcoord.longitude)
+//                            println(weight)
                             //                    println(value)
                             
                             var circ = GMSCircle(position: pointcoord, radius: 5)
                             circ.fillColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.2)
+                            circ.fillColor = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
                             circ.strokeColor = UIColor.redColor()
                             circ.map = self.mapView;
                         }
                         
                         for i in 0...routesList.count-1{
                             self.scores.append(routeScore[i].int!)
-                            self.indices.append(routeIndex[i].int!)
+                            self.indices.append(routeIndex[i].string!)
                         }
-                        
+                        NSLog("reached here");
                         self.routes = Array<Array<CLLocationCoordinate2D>>()
                         
                         /* Paths to render */
@@ -218,7 +219,7 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                         //                var polyline = GMSPolyline(path : pathList[0])
                         //                polyline.spans = [GMSStyleSpan(color: polycolor)]
                         //                polyline.map = mapView
-                        println(self.pathList[0].count)
+//                        println(self.pathList[0].count)
                         for i in 0...self.pathList.count-1{
                             
                             let polycolor = UIColor(red: R/255.0, green: G/255.0, blue: B/255.0, alpha: 1.0)
@@ -227,7 +228,7 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                             polyline.strokeWidth = CGFloat(6.0)
                             polyline.map = self.mapView
                             
-                            println("in drawing")
+//                            println("in drawing")
                             
                             R = CGFloat(R+50)
                             G = CGFloat(G+50)
@@ -629,7 +630,9 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "segue_route") {
             var svc = segue.destinationViewController as! navigation;
-            svc.route_index = indexPicked.description;
+            NSLog("Index picked is")
+            NSLog("%d", indexPicked)
+            svc.route_index = indexPicked;
             //            svc.destString = inputDest.text
             //            println("inputdest:\(inputDest.text)")
         }
