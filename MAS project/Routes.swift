@@ -561,7 +561,8 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
             }
             
             self.indexPicked = self.indices[self.pathPicked]
-            
+        
+        
             var polyline = GMSPolyline(path : self.pathList[self.pathPicked])
             polyline.spans = [GMSStyleSpan(color: UIColor.greenColor())]
             polyline.strokeWidth = CGFloat(6.0)
@@ -640,6 +641,8 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "segue_route") {
             var svc = segue.destinationViewController as! navigation;
+            var svc2 = segue.destinationViewController as! navigation;
+            svc2.myPath = self.pathList[self.pathPicked]
             NSLog("Index picked is")
             NSLog("%d", indexPicked)
             svc.route_index = indexPicked;

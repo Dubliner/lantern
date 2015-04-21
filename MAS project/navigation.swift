@@ -15,6 +15,7 @@ import CoreLocation
 
 
 class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate {
+    var myPath : GMSMutablePath!
     
     var report_buttons: Array<UIButton> = [];
     var rating_buttons: Array<UIButton> = [];
@@ -162,6 +163,8 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         NSLog(route_index!);
+        println(self.myPath.description)
+        println("path end")
         
         self.view_width = self.view.frame.size.width;
         self.view_height = self.view.frame.size.height;
