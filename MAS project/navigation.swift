@@ -33,19 +33,16 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
 
     func report(sender: UIButton!) {
         var alert = UIAlertController(title: "What would you like to report?", message: "", preferredStyle: UIAlertControllerStyle.Alert)
-//        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-//        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
-        
         
         let lightingAction = UIAlertAction(title: "Lighting", style: .Default, handler: {(action: UIAlertAction!) in
             NSLog("Reporting lighting");
             var x_gap = CGFloat(50)
             var box_width = self.view_width - 2 * x_gap
-            var box_height = CGFloat(100)
             var label_height = CGFloat(40);
             var inner_padding = CGFloat(10)
             var upper_padding = CGFloat(10) + label_height
             var star_size = (box_width - 2 * inner_padding) / 5
+            var box_height = CGFloat(100) + star_size;
             
             self.lighting.backgroundColor = UIColor.whiteColor();
             self.lighting.frame = CGRectMake(x_gap, 100.0, box_width, box_height);
@@ -147,20 +144,6 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         self.presentViewController(alert, animated: true, completion: nil)
 
     }
-    
-    func lighting_handler(sender: UIButton!) {
-//        performSegueWithIdentifier("segue_initial1", sender: sender);
-        NSLog("reporting");
-//        var alert = UIAlertController(title: "Report", message: "Report", preferredStyle: UIAlertControllerStyle.Alert)
-//        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-//        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
-//        self.presentViewController(alert, animated: true, completion: nil)
-        
-    //        alertView.message = "message";
-
-        
-    }
-  
 
     override func viewDidLoad() {
         self.route_index = self.fromRoutes.iPick
@@ -179,7 +162,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.startUpdatingLocation()
         
-        var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 13)
+        var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 15)
         var mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
         mapView.camera = camera
         mapView.myLocationEnabled = true
@@ -195,12 +178,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         polyline.map = mapView
         
         NSLog("Here we are");
-        //        var X_Co = self.view.frame.size.width - 100;
-        //        var Y_Co = self.view.frame.size.height - 40;
         var button1 = UIButton(frame: CGRectMake(25, view_height - 60, view_width/2 - 35, 40));
-        //        button1.center.x = self.view.frame.size.width/2;
-//        button1.titleLabel!.text = "Report";
-//        button1.titleLabel!.textColor = UIColor.blackColor();
         button1.setTitle("Report", forState: .Normal);
         button1.setTitleColor(UIColor.whiteColor(), forState: .Normal);
         button1.titleLabel!.textAlignment = .Center;
@@ -209,9 +187,6 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         
         self.view.addSubview(button1);
         var button2 = UIButton(frame: CGRectMake(view_width/2 + 10, view_height - 60, view_width/2 - 35, 40));
-        //        button1.center.x = self.view.frame.size.width/2;
-//        button2.titleLabel!.text = "End";
-//        button2.titleLabel!.textColor = UIColor.blackColor();
         button2.setTitle("End", forState: .Normal);
         button2.setTitleColor(UIColor.whiteColor(), forState: .Normal);
         button2.titleLabel!.textAlignment = .Center;
