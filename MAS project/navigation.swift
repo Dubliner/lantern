@@ -22,7 +22,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
     var rating_stars = 0;
     var lighting = UIView();
     var rating = UIView();
-    let locationManager = CLLocationManager()
+    let locationManager : CLLocationManager!
     var locationObj = CLLocation();
     var route_index: String?
 
@@ -158,6 +158,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
         var view_width = self.view.frame.size.width;
         var view_height = self.view.frame.size.height;
         
+        self.locationManager = CLLocationManager()
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.requestAlwaysAuthorization()
