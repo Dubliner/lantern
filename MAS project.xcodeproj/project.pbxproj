@@ -43,6 +43,8 @@
 		4886D1621AC202B400550CB5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4886D1521AC2022100550CB5 /* OpenGLES.framework */; };
 		4886D1631AC202BD00550CB5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4886D1541AC2022A00550CB5 /* QuartzCore.framework */; };
 		4886D1641AC202C400550CB5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4886D1561AC2023700550CB5 /* SystemConfiguration.framework */; };
+		48A9DA1E1AE673A600360927 /* selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 48A9DA1C1AE673A600360927 /* selected.png */; };
+		48A9DA1F1AE673A600360927 /* unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 48A9DA1D1AE673A600360927 /* unselected.png */; };
 		48D237FB1AC461B6008E66A3 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D237FA1AC461B6008E66A3 /* MapViewController.m */; };
 		48D237FD1AC46391008E66A3 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48D237FC1AC46391008E66A3 /* GoogleMaps.framework */; };
 		48D237FF1AC463A5008E66A3 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 48D237FE1AC463A5008E66A3 /* GoogleMaps.bundle */; };
@@ -89,6 +91,8 @@
 		4886D1561AC2023700550CB5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4886D15E1AC2029D00550CB5 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		4886D1661AC2056B00550CB5 /* MAS project-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAS project-Bridging-Header.h"; sourceTree = "<group>"; };
+		48A9DA1C1AE673A600360927 /* selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selected.png; sourceTree = "<group>"; };
+		48A9DA1D1AE673A600360927 /* unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unselected.png; sourceTree = "<group>"; };
 		48D237F91AC46195008E66A3 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		48D237FA1AC461B6008E66A3 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		48D237FC1AC46391008E66A3 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
@@ -181,6 +185,8 @@
 		4886D0EC1AC1EFAA00550CB5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				48A9DA1C1AE673A600360927 /* selected.png */,
+				48A9DA1D1AE673A600360927 /* unselected.png */,
 				4816B6971AE1A14E00DE4339 /* search_button.png */,
 				4886D0ED1AC1EFAA00550CB5 /* Info.plist */,
 			);
@@ -306,6 +312,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48A9DA1E1AE673A600360927 /* selected.png in Resources */,
+				48A9DA1F1AE673A600360927 /* unselected.png in Resources */,
 				4886D0F41AC1EFAA00550CB5 /* Main.storyboard in Resources */,
 				4886D0F91AC1EFAA00550CB5 /* LaunchScreen.xib in Resources */,
 				4886D0F61AC1EFAA00550CB5 /* Images.xcassets in Resources */,

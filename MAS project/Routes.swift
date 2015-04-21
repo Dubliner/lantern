@@ -626,6 +626,7 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "segue_route") {
             var svc = segue.destinationViewController as! navigation;
+            svc.route_index = indexPicked.description;
             //            svc.destString = inputDest.text
             //            println("inputdest:\(inputDest.text)")
         }

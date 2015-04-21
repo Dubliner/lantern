@@ -21,27 +21,33 @@ class Initial: UIViewController, GMSMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        var view_width = self.view.bounds.size.width;
+        var view_height = self.view.bounds.size.height;
         var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 15)
         var mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
         mapView.camera = camera
         mapView.myLocationEnabled = true
         mapView.settings.compassButton = true
-        mapView.settings.myLocationButton = true
+//        mapView.settings.myLocationButton = true
         self.view = mapView
         
         NSLog("Here we are");
-        //        var X_Co = self.view.frame.size.width - 100;
-        //        var Y_Co = self.view.frame.size.height - 40;
-        var button1 = UIButton(frame: CGRectMake(30, 550, 300, 40));
-        //        button1.center.x = self.view.frame.size.width/2;
-        button1.setTitle("Where do you want to go?", forState: .Normal);
-        button1.setTitleColor(UIColor.blackColor(), forState: .Normal);
-        button1.titleLabel!.textAlignment = .Center;
+        
+        var button1 = UIButton(frame: CGRectMake(30, view_height - 90, view_width - 60, 40));
+//        button1.center.x = view_width/2;
+        button1.setTitle("  Where do you want to go?", forState: .Normal);
+        button1.setTitleColor(UIColor.grayColor(), forState: .Normal);
+        button1.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left;
+//        button1.titleLabel!.textAlignment = UITextAlignmentLeft;
         button1.backgroundColor = UIColor.whiteColor();
         button1.addTarget(self, action: Selector("next_screen:"), forControlEvents: UIControlEvents.TouchUpInside);
         
+        var search_button = UIButton(frame: CGRectMake(view_width - 70, view_height - 90, 40, 40));
+        search_button.setBackgroundImage(UIImage(named: "search_button.png"), forState: UIControlState.Normal);
+        search_button.addTarget(self, action: Selector("next_screen:"), forControlEvents: UIControlEvents.TouchUpInside);
+        
         self.view.addSubview(button1);
+        self.view.addSubview(search_button)
         
         var url : NSString = "http://173.236.254.243:8080/heatmaps/positive?lat=33.777442&lng=-84.397217&radius=5000"
         var queryURL : NSURL = NSURL(string: url as String)!
