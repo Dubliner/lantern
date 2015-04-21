@@ -11,8 +11,6 @@ import Foundation
 
 
 
-
-
 class Initial: UIViewController, GMSMapViewDelegate {
     
     func next_screen(sender: UIButton!) {
@@ -33,12 +31,18 @@ class Initial: UIViewController, GMSMapViewDelegate {
         
         NSLog("Here we are");
         
+        var label = UILabel(frame: CGRectMake(25, view_height - 120, view_width - 50, 40))
+        label.backgroundColor = hexStringToUIColor("#5A5399");
+        label.text = "Enter Destination";
+        label.textAlignment = .Center;
+        label.textColor = UIColor.whiteColor();
+        
         var button1 = UIButton(frame: CGRectMake(25, view_height - 70, view_width - 90, 40));
 //        button1.center.x = view_width/2;
         button1.setTitle("  Where do you want to go?", forState: .Normal);
         button1.setTitleColor(UIColor.grayColor(), forState: .Normal);
         button1.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left;
-//        button1.titleLabel!.textAlignment = UITextAlignmentLeft;
+//        button1.titleLabel!.textAlignment = UITextAlignmentLeft;-
         button1.backgroundColor = UIColor.whiteColor();
         button1.addTarget(self, action: Selector("next_screen:"), forControlEvents: UIControlEvents.TouchUpInside);
         
@@ -46,6 +50,7 @@ class Initial: UIViewController, GMSMapViewDelegate {
         search_button.setBackgroundImage(UIImage(named: "search_button.png"), forState: UIControlState.Normal);
         search_button.addTarget(self, action: Selector("next_screen:"), forControlEvents: UIControlEvents.TouchUpInside);
         
+        self.view.addSubview(label);
         self.view.addSubview(button1);
         self.view.addSubview(search_button)
         
@@ -108,6 +113,29 @@ class Initial: UIViewController, GMSMapViewDelegate {
     }
     @IBAction func login_button(sender : AnyObject) {
     }
+    
+    func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet() as NSCharacterSet).uppercaseString
+        
+        if (cString.hasPrefix("#")) {
+            cString = cString.substringFromIndex(advance(cString.startIndex, 1))
+        }
+        
+        if (count(cString) != 6) {
+            return UIColor.grayColor()
+        }
+        
+        var rgbValue:UInt32 = 0
+        NSScanner(string: cString).scanHexInt(&rgbValue)
+        
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+    
     
     
 }
