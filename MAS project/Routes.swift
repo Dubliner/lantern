@@ -167,7 +167,7 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                             println(weight)
                             //                    println(value)
                             
-                            var circ = GMSCircle(position: pointcoord, radius: 150)
+                            var circ = GMSCircle(position: pointcoord, radius: 5)
                             circ.fillColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.2)
                             circ.strokeColor = UIColor.redColor()
                             circ.map = self.mapView;
@@ -269,6 +269,8 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
         
         
         super.viewDidLoad()
+        var view_width = self.view.frame.size.width;
+        var view_height = self.view.frame.size.height;
         println(self.destString)
         
         var camera = GMSCameraPosition.cameraWithLatitude(33.777442, longitude: -84.397217, zoom: 15) // coc 33.777442, longitude: -84.397217, zoom: 14
@@ -305,12 +307,13 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
         
         
         
-        var button1 = UIButton(frame: CGRectMake(30, 550, 300, 40));
+        var button1 = UIButton(frame: CGRectMake(25, view_height - 60, view_width - 50, 40));
         //        button1.center.x = self.view.frame.size.width/2;
-        button1.titleLabel!.text = "Select route";
-        button1.titleLabel!.textColor = UIColor.blackColor();
+//        button1.titleLabel!.text = "Select route";
+        button1.setTitle("Start Navigation", forState: .Normal);
+        button1.setTitleColor(UIColor.whiteColor(), forState: .Normal);
         button1.titleLabel!.textAlignment = .Center;
-        button1.backgroundColor = UIColor.whiteColor();
+        button1.backgroundColor = hexStringToUIColor("#5A5399");
         button1.addTarget(self, action: Selector("next_screen:"), forControlEvents: UIControlEvents.TouchUpInside);
         
         self.view.addSubview(button1);
@@ -632,4 +635,25 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
         }
     }
     
+    func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet() as NSCharacterSet).uppercaseString
+        
+        if (cString.hasPrefix("#")) {
+            cString = cString.substringFromIndex(advance(cString.startIndex, 1))
+        }
+        
+        if (count(cString) != 6) {
+            return UIColor.grayColor()
+        }
+        
+        var rgbValue:UInt32 = 0
+        NSScanner(string: cString).scanHexInt(&rgbValue)
+        
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
 }
