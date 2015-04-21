@@ -22,7 +22,7 @@ class navigation: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegat
     var rating_stars = 0;
     var lighting = UIView();
     var rating = UIView();
-    let locationManager : CLLocationManager!
+    var locationManager : CLLocationManager!
     var locationObj = CLLocation();
     var route_index: String?
 

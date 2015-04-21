@@ -515,8 +515,8 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
         var pressLng = coord.longitude
         //        println("pressed \(pressLat)")
         
-        if setRouteFlag == 0 {
-            
+//        if setRouteFlag == 0 {
+        
             var marker = GMSMarker()
             marker.position = coord
             marker.map = mapView
@@ -540,7 +540,7 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                     bestInd = i
                 }
                 var currPath : GMSPath = self.pathList[i]
-                if GMSGeometryIsLocationOnPathTolerance(coord, currPath, false, CLLocationDistance(10.0)){
+                if GMSGeometryIsLocationOnPathTolerance(coord, currPath, false, CLLocationDistance(2.0)){
                     candidates.append(i)
                     if self.scores[i]>bestCandidateScore{
                         bestCandidateScore = self.scores[i]
@@ -567,7 +567,7 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
             
             
             println("pathPicked:\(self.pathPicked)")
-        }
+//        } // setRoute flag end
         //        // http://173.236.254.243:8080/routes/select/1425850320099
         //        let sendRoute = NSURL(fileURLWithPath: "http://173.236.254.243:8080/")
         //        let postRequest = NSMutableURLRequest(URL: sendRoute!)
