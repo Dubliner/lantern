@@ -550,7 +550,9 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                     //                    self.pathPicked = i
                 }
             }
-            
+            println("bestCandidate:\(bestCandidate)")
+            println("bestInd:\(bestInd)")
+        
             if candidates.count==0{
                 self.pathPicked = bestInd
             }
