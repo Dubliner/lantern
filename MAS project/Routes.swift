@@ -18,6 +18,7 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
     /* Globals: */
     var mapView : GMSMapView!
     var polylineSet : Array<GMSPolyline> = Array<GMSPolyline>()
+    var polyDec : Array<GMSPolyline> = Array<GMSPolyline>()
     
     var manager : CLLocationManager!
     var startLat : String!
@@ -243,6 +244,11 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                             polyline.map = self.mapView
                             self.polylineSet.append(polyline)
                             
+                            var polyThin = GMSPolyline(path: self.pathList[i])
+                            var polyThinColor = UIColor(red: (R+30)/255.0, green: (G+30)/255.0, blue: (B+30)/255.0, alpha: 1.0)
+                            polyThin.strokeWidth = CGFloat(10.0)
+                            self.polyDec.append(polyThin)
+                            
                             R = CGFloat(R+50)
                             G = CGFloat(G+50)
                             B = CGFloat(B+50)
@@ -319,7 +325,7 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
                     bestInd = i
                 }
                 var currPath : GMSPath = self.pathList[i]
-                if GMSGeometryIsLocationOnPathTolerance(coord, currPath, false, CLLocationDistance(10.0)){
+                if GMSGeometryIsLocationOnPathTolerance(coord, currPath, false, CLLocationDistance(20.0)){
                     candidates.append(i)
                     if self.scores[i]>bestCandidateScore{
                         bestCandidateScore = self.scores[i]
@@ -342,6 +348,8 @@ class Routes: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate{ /
             for i in 0...self.pathList.count-1{
                 if i==self.pathPicked {
                     self.polylineSet[i].spans = [GMSStyleSpan(color: UIColor.greenColor())]
+                    self.polyDec[i].spans = [GMSStyleSpan(color: UIColor.purpleColor())]
+                    self.polyDec[i].map = mapView
                 }
                 else {
                     self.polylineSet[i].spans = [GMSStyleSpan(color: UIColor.grayColor())]
